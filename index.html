@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>高立体感温度控制器导航</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      background: #f5f5f5;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 20px;
+    }
+    .navigation-container {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-template-rows: repeat(6, 1fr);
+      gap: 50px; /* 间距50px */
+      max-width: 95vw;
+      padding: 40px;
+    }
+    .nav-button {
+      width: 160px;
+      height: 80px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 20px;
+      border: none;
+      font-size: 18px;
+      font-weight: 500;
+      color: #000000;
+      backdrop-filter: blur(10px);
+      box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+    }
+    .nav-link {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: inherit;
+      text-decoration: none;
+    }
+    /* 半透明颜色 */
+    .nav-button:nth-child(1) { background: rgba(255, 150, 150, 0.4); }
+    .nav-button:nth-child(2) { background: rgba(255, 200, 120, 0.4); }
+    .nav-button:nth-child(3) { background: rgba(120, 200, 120, 0.4); }
+    .nav-button:nth-child(4) { background: rgba(120, 180, 255, 0.4); }
+    .nav-button:nth-child(5) { background: rgba(180, 150, 255, 0.4); }
+    .nav-button:nth-child(6) { background: rgba(255, 120, 180, 0.4); }
+    .nav-button:nth-child(7) { background: rgba(255, 200, 120, 0.4); }
+    .nav-button:nth-child(8) { background: rgba(120, 200, 120, 0.4); }
+    .nav-button:nth-child(9) { background: rgba(120, 180, 255, 0.4); }
+    .nav-button:nth-child(10) { background: rgba(180, 150, 255, 0.4); }
+    .nav-button:nth-child(11) { background: rgba(255, 120, 180, 0.4); }
+    .nav-button:nth-child(12) { background: rgba(255, 150, 150, 0.4); }
+    .nav-button:nth-child(13) { background: rgba(120, 200, 120, 0.4); }
+    .nav-button:nth-child(14) { background: rgba(120, 180, 255, 0.4); }
+    .nav-button:nth-child(15) { background: rgba(180, 150, 255, 0.4); }
+    .nav-button:nth-child(16) { background: rgba(255, 120, 180, 0.4); }
+    .nav-button:nth-child(17) { background: rgba(255, 150, 150, 0.4); }
+    .nav-button:nth-child(18) { background: rgba(255, 200, 120, 0.4); }
+    .nav-button:nth-child(19) { background: rgba(120, 180, 255, 0.4); }
+    .nav-button:nth-child(20) { background: rgba(180, 150, 255, 0.4); }
+    .nav-button:nth-child(21) { background: rgba(255, 120, 180, 0.4); }
+    .nav-button:nth-child(22) { background: rgba(255, 150, 150, 0.4); }
+    .nav-button:nth-child(23) { background: rgba(255, 200, 120, 0.4); }
+    .nav-button:nth-child(24) { background: rgba(120, 200, 120, 0.4); }
+    .nav-button:nth-child(25) { background: rgba(180, 150, 255, 0.4); }
+    .nav-button:nth-child(26) { background: rgba(255, 120, 180, 0.4); }
+    .nav-button:nth-child(27) { background: rgba(255, 150, 150, 0.4); }
+    .nav-button:nth-child(28) { background: rgba(255, 200, 120, 0.4); }
+    .nav-button:nth-child(29) { background: rgba(120, 200, 120, 0.4); }
+    .nav-button:nth-child(30) { background: rgba(120, 180, 255, 0.4); }
+    .nav-button:nth-child(31) { background: rgba(255, 120, 180, 0.4); }
+    .nav-button:nth-child(32) { background: rgba(255, 150, 150, 0.4); }
+    .nav-button:nth-child(33) { background: rgba(255, 200, 120, 0.4); }
+    .nav-button:nth-child(34) { background: rgba(120, 200, 120, 0.4); }
+    .nav-button:nth-child(35) { background: rgba(120, 180, 255, 0.4); }
+    .nav-button:nth-child(36) { background: rgba(180, 150, 255, 0.4); }
+    
+    .nav-button:hover {
+      transform: scale(1.05);
+      box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.9);
+      opacity: 0.9;
+    }
+    @media (max-width: 768px) {
+      .navigation-container {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(12, 1fr);
+        gap: 40px;
+      }
+      .nav-button {
+        width: 140px;
+      }
+    }
+    @media (max-width: 480px) {
+      .navigation-container {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(36, 1fr);
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="navigation-container">
+    <div class="nav-button"><a href="http://10.65.248.23/magno/render" class="nav-link" target="_blank" rel="noopener noreferrer">财政一体化</a></div>
+    <div class="nav-button"><a href="https://rs.jshrss.jiangsu.gov.cn/index/" class="nav-link" target="_blank" rel="noopener noreferrer">江苏人社</a></div>
+    <div class="nav-button"><a href="https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index" class="nav-link" target="_blank" rel="noopener noreferrer">医疗保险</a></div>
+    <div class="nav-button"><a href="https://wt.sqzfgjj.com/ish" class="nav-link" target="_blank" rel="noopener noreferrer">公积金</a></div>
+    <div class="nav-button"><a href="http://10.65.205.44/fcfa/index.html?t=20200224#sysManage/workFlow/workFlowMoniterDialog" class="nav-link" target="_blank" rel="noopener noreferrer">资产云</a></div>
+    <div class="nav-button"><a href="http://tybb.jscz.gov.cn/" class="nav-link" target="_blank" rel="noopener noreferrer">资产月报</a></div>
+    <div class="nav-button"><a href="https://hlwglt.jsbchina.cn:8080/login.html" class="nav-link" target="_blank" rel="noopener noreferrer">江苏银行</a></div>
+    <div class="nav-button"><a href="https://buyer.sq12315.com/#/login" class="nav-link" target="_blank" rel="noopener noreferrer">阳光直采</a></div>
+    <div class="nav-button"><a href="https://ygst.jsed.edu.cn" class="nav-link" target="_blank" rel="noopener noreferrer">阳光监督</a></div>
+    <div class="nav-button"><a href="http://mail.163.com/" class="nav-link" target="_blank" rel="noopener noreferrer">网易邮箱</a></div>
+    <div class="nav-button"><a href="https://mail.qq.com/" class="nav-link" target="_blank" rel="noopener noreferrer">QQ邮箱</a></div>
+    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">办公平台</a></div>
+    <div class="nav-button"><a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-link" target="_blank" rel="noopener noreferrer">统计直报</a></div>
+    <div class="nav-button"><a href="http://202.205.176.94/JYJF4/login/login_toIndex" class="nav-link" target="_blank" rel="noopener noreferrer">经费年报</a></div>
+    <div class="nav-button"><a href="http://jszfcg.jscz.gov.cn/jszc/login" class="nav-link" target="_blank" rel="noopener noreferrer">政府采购</a></div>
+    <div class="nav-button"><a href="https://tjxt.moe.edu.cn:8000" class="nav-link" target="_blank" rel="noopener noreferrer">教育统计</a></div>
+    <div class="nav-button"><a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login" class="nav-link" target="_blank" rel="noopener noreferrer">法人业务</a></div>
+    <div class="nav-button"><a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp" class="nav-link" target="_blank" rel="noopener noreferrer">债务监测</a></div>
+    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">退休计算</a></div>
+    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">江苏教师</a></div>
+    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">宿迁干部</a></div>
+    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">常用软件</a></div>
+    <div class="nav-button"><a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink" class="nav-link" target="_blank" rel="noopener noreferrer">账号密码</a></div>
+    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">按钮24</a></div>
+ 
+   
+  </div>
+</body>
+</html>
