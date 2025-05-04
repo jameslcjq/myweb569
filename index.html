@@ -5,140 +5,134 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>老九的导航站</title>
   <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin: 0;
-      background: #f5f5f5;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      padding: 20px;
+    /* ========= 页面整体 ========= */
+    body{
+      background:#f5f5f5;
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      display:flex;flex-direction:column;align-items:center;
+      gap:20px;                 /* 名片与按钮区间距 */
+      padding-top:40px;margin:0;min-height:100vh;
     }
-    .navigation-container {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: repeat(6, 1fr);
-      gap: 50px; /* 间距50px */
-      max-width: 95vw;
-      padding: 40px;
+
+    /* ========= 玻璃名片 ========= */
+    .card{
+      width:320px;padding:20px;border-radius:16px;
+      background:rgba(255,255,255,.1);backdrop-filter:blur(10px);
+      box-shadow:0 8px 24px rgba(0,0,0,.2);
+      border:1px solid rgba(255,255,255,.3);
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
     }
-    .nav-button {
-      width: 160px;
-      height: 80px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      border-radius: 20px;
-      border: none;
-      font-size: 18px;
-      font-weight: 500;
-      color: #000000;
-      backdrop-filter: blur(10px);
-      box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.1), -6px -6px 12px rgba(255, 255, 255, 0.8);
-      text-decoration: none;
+    .row{display:flex;align-items:center;margin:12px 0;font-size:18px;}
+    .label{color:#003366;font-weight:bold;}
+    .value{margin-left:4px;color:#ffaa33;text-shadow:0 0 3px #ffaa33,0 0 6px #ffaa33;}
+    .title{font-size:20px;margin-bottom:16px;}
+
+    /* ========= 导航按钮网格 ========= */
+    .navigation-container{
+      display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
+      gap:50px;max-width:95vw;padding:40px;
     }
-    .nav-link {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: inherit;
-      text-decoration: none;
+    /* 现在 nav-button 直接就是 <a> */
+    .nav-button{
+      width:160px;height:80px;
+      display:flex;justify-content:center;align-items:center;
+      cursor:pointer;transition:.3s ease;
+      border-radius:20px;border:none;
+      font-size:18px;font-weight:500;color:#000;text-decoration:none;
+      backdrop-filter:blur(10px);
+      box-shadow:6px 6px 12px rgba(0,0,0,.1),-6px -6px 12px rgba(255,255,255,.8);
     }
-    /* 半透明颜色 */
-    .nav-button:nth-child(1) { background: rgba(255, 150, 150, 0.4); }
-    .nav-button:nth-child(2) { background: rgba(255, 200, 120, 0.4); }
-    .nav-button:nth-child(3) { background: rgba(120, 200, 120, 0.4); }
-    .nav-button:nth-child(4) { background: rgba(120, 180, 255, 0.4); }
-    .nav-button:nth-child(5) { background: rgba(180, 150, 255, 0.4); }
-    .nav-button:nth-child(6) { background: rgba(255, 120, 180, 0.4); }
-    .nav-button:nth-child(7) { background: rgba(255, 200, 120, 0.4); }
-    .nav-button:nth-child(8) { background: rgba(120, 200, 120, 0.4); }
-    .nav-button:nth-child(9) { background: rgba(120, 180, 255, 0.4); }
-    .nav-button:nth-child(10) { background: rgba(180, 150, 255, 0.4); }
-    .nav-button:nth-child(11) { background: rgba(255, 120, 180, 0.4); }
-    .nav-button:nth-child(12) { background: rgba(255, 150, 150, 0.4); }
-    .nav-button:nth-child(13) { background: rgba(120, 200, 120, 0.4); }
-    .nav-button:nth-child(14) { background: rgba(120, 180, 255, 0.4); }
-    .nav-button:nth-child(15) { background: rgba(180, 150, 255, 0.4); }
-    .nav-button:nth-child(16) { background: rgba(255, 120, 180, 0.4); }
-    .nav-button:nth-child(17) { background: rgba(255, 150, 150, 0.4); }
-    .nav-button:nth-child(18) { background: rgba(255, 200, 120, 0.4); }
-    .nav-button:nth-child(19) { background: rgba(120, 180, 255, 0.4); }
-    .nav-button:nth-child(20) { background: rgba(180, 150, 255, 0.4); }
-    .nav-button:nth-child(21) { background: rgba(255, 120, 180, 0.4); }
-    .nav-button:nth-child(22) { background: rgba(255, 150, 150, 0.4); }
-    .nav-button:nth-child(23) { background: rgba(255, 200, 120, 0.4); }
-    .nav-button:nth-child(24) { background: rgba(120, 200, 120, 0.4); }
-    .nav-button:nth-child(25) { background: rgba(180, 150, 255, 0.4); }
-    .nav-button:nth-child(26) { background: rgba(255, 120, 180, 0.4); }
-    .nav-button:nth-child(27) { background: rgba(255, 150, 150, 0.4); }
-    .nav-button:nth-child(28) { background: rgba(255, 200, 120, 0.4); }
-    .nav-button:nth-child(29) { background: rgba(120, 200, 120, 0.4); }
-    .nav-button:nth-child(30) { background: rgba(120, 180, 255, 0.4); }
-    .nav-button:nth-child(31) { background: rgba(255, 120, 180, 0.4); }
-    .nav-button:nth-child(32) { background: rgba(255, 150, 150, 0.4); }
-    .nav-button:nth-child(33) { background: rgba(255, 200, 120, 0.4); }
-    .nav-button:nth-child(34) { background: rgba(120, 200, 120, 0.4); }
-    .nav-button:nth-child(35) { background: rgba(120, 180, 255, 0.4); }
-    .nav-button:nth-child(36) { background: rgba(180, 150, 255, 0.4); }
-    
-    .nav-button:hover {
-      transform: scale(1.05);
-      box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.15), -8px -8px 16px rgba(255, 255, 255, 0.9);
-      opacity: 0.9;
+    .nav-button:hover{transform:scale(1.05);box-shadow:8px 8px 16px rgba(0,0,0,.15),-8px -8px 16px rgba(255,255,255,.9);opacity:.9;}
+
+    /* —— 颜色映射 (36) —— */
+    .nav-button:nth-child(1){background:rgba(255,150,150,.4);}
+    .nav-button:nth-child(2){background:rgba(255,200,120,.4);}
+    .nav-button:nth-child(3){background:rgba(120,200,120,.4);}
+    .nav-button:nth-child(4){background:rgba(120,180,255,.4);}
+    .nav-button:nth-child(5){background:rgba(180,150,255,.4);}
+    .nav-button:nth-child(6){background:rgba(255,120,180,.4);}
+    .nav-button:nth-child(7){background:rgba(255,200,120,.4);}
+    .nav-button:nth-child(8){background:rgba(120,200,120,.4);}
+    .nav-button:nth-child(9){background:rgba(120,180,255,.4);}
+    .nav-button:nth-child(10){background:rgba(180,150,255,.4);}
+    .nav-button:nth-child(11){background:rgba(255,120,180,.4);}
+    .nav-button:nth-child(12){background:rgba(255,150,150,.4);}
+    .nav-button:nth-child(13){background:rgba(120,200,120,.4);}
+    .nav-button:nth-child(14){background:rgba(120,180,255,.4);}
+    .nav-button:nth-child(15){background:rgba(180,150,255,.4);}
+    .nav-button:nth-child(16){background:rgba(255,120,180,.4);}
+    .nav-button:nth-child(17){background:rgba(255,150,150,.4);}
+    .nav-button:nth-child(18){background:rgba(255,200,120,.4);}
+    .nav-button:nth-child(19){background:rgba(120,180,255,.4);}
+    .nav-button:nth-child(20){background:rgba(180,150,255,.4);}
+    .nav-button:nth-child(21){background:rgba(255,120,180,.4);}
+    .nav-button:nth-child(22){background:rgba(255,150,150,.4);}
+    .nav-button:nth-child(23){background:rgba(255,200,120,.4);}
+    .nav-button:nth-child(24){background:rgba(120,200,120,.4);}
+    .nav-button:nth-child(25){background:rgba(180,150,255,.4);}
+    .nav-button:nth-child(26){background:rgba(255,120,180,.4);}
+    .nav-button:nth-child(27){background:rgba(255,150,150,.4);}
+    .nav-button:nth-child(28){background:rgba(255,200,120,.4);}
+    .nav-button:nth-child(29){background:rgba(120,200,120,.4);}
+    .nav-button:nth-child(30){background:rgba(120,180,255,.4);}
+    .nav-button:nth-child(31){background:rgba(255,120,180,.4);}
+    .nav-button:nth-child(32){background:rgba(255,150,150,.4);}
+    .nav-button:nth-child(33){background:rgba(255,200,120,.4);}
+    .nav-button:nth-child(34){background:rgba(120,200,120,.4);}
+    .nav-button:nth-child(35){background:rgba(120,180,255,.4);}
+    .nav-button:nth-child(36){background:rgba(180,150,255,.4);}
+
+    /* ========= 响应式 ========= */
+    @media(max-width:768px){
+      .navigation-container{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(12,1fr);gap:40px;}
+      .nav-button{width:140px;}
     }
-    @media (max-width: 768px) {
-      .navigation-container {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(12, 1fr);
-        gap: 40px;
-      }
-      .nav-button {
-        width: 140px;
-      }
-    }
-    @media (max-width: 480px) {
-      .navigation-container {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(36, 1fr);
-        gap: 30px;
-      }
+    @media(max-width:480px){
+      .navigation-container{grid-template-columns:1fr;grid-template-rows:repeat(36,1fr);gap:30px;}
     }
   </style>
 </head>
 <body>
+
+  <!-- ===== 玻璃名片 ===== -->
+  <div class="card">
+    <div class="row title"><span class="label">名称:</span><span class="value">&nbsp&nbsp&nbsp老九的导航站</span></div>
+    <div class="row"><span class="label">微信:</span><span class="value">&nbsp&nbsp&nbspLaojiu569hu</span></div>
+    <div class="row"><span class="label">电话:</span><span class="value">&nbsp&nbsp&nbsp13812313840</span></div>
+    <div class="row"><span class="label">邮箱:</span><span class="value">&nbsp&nbsp&nbsp13812313840@163.com</span></div>
+    <div class="row"><span class="label">网站:</span><span class="value">&nbsp&nbsp&nbspwww.hujiuxi.top:8888</span></div>
+  </div>
+
+  <!-- ===== 导航按钮区 ===== -->
   <div class="navigation-container">
-    <div class="nav-button"><a href="http://10.65.248.23/magno/render" class="nav-link" target="_blank" rel="noopener noreferrer">财政一体化</a></div>
-    <div class="nav-button"><a href="https://rs.jshrss.jiangsu.gov.cn/index/" class="nav-link" target="_blank" rel="noopener noreferrer">江苏人社</a></div>
-    <div class="nav-button"><a href="https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index" class="nav-link" target="_blank" rel="noopener noreferrer">医疗保险</a></div>
-    <div class="nav-button"><a href="https://wt.sqzfgjj.com/ish" class="nav-link" target="_blank" rel="noopener noreferrer">公积金</a></div>
-    <div class="nav-button"><a href="http://10.65.205.44/fcfa/index.html?t=20200224#sysManage/workFlow/workFlowMoniterDialog" class="nav-link" target="_blank" rel="noopener noreferrer">资产云</a></div>
-    <div class="nav-button"><a href="http://tybb.jscz.gov.cn/" class="nav-link" target="_blank" rel="noopener noreferrer">资产月报</a></div>
-    <div class="nav-button"><a href="https://hlwglt.jsbchina.cn:8080/login.html" class="nav-link" target="_blank" rel="noopener noreferrer">江苏银行</a></div>
-    <div class="nav-button"><a href="https://buyer.sq12315.com/#/login" class="nav-link" target="_blank" rel="noopener noreferrer">阳光直采</a></div>
-    <div class="nav-button"><a href="https://ygst.jsed.edu.cn" class="nav-link" target="_blank" rel="noopener noreferrer">阳光监督</a></div>
-    <div class="nav-button"><a href="http://mail.163.com/" class="nav-link" target="_blank" rel="noopener noreferrer">网易邮箱</a></div>
-    <div class="nav-button"><a href="https://mail.qq.com/" class="nav-link" target="_blank" rel="noopener noreferrer">QQ邮箱</a></div>
-    <div class="nav-button"><a href="https://web.yunbg.vip:1443/" class="nav-link" target="_blank" rel="noopener noreferrer">办公平台</a></div>
-    <div class="nav-button"><a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-link" target="_blank" rel="noopener noreferrer">统计直报</a></div>
-    <div class="nav-button"><a href="http://202.205.176.94/JYJF4/login/login_toIndex" class="nav-link" target="_blank" rel="noopener noreferrer">经费年报</a></div>
-    <div class="nav-button"><a href="http://jszfcg.jscz.gov.cn/jszc/login" class="nav-link" target="_blank" rel="noopener noreferrer">政府采购</a></div>
-    <div class="nav-button"><a href="https://tjxt.moe.edu.cn:8000" class="nav-link" target="_blank" rel="noopener noreferrer">教育统计</a></div>
-    <div class="nav-button"><a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login" class="nav-link" target="_blank" rel="noopener noreferrer">法人业务</a></div>
-    <div class="nav-button"><a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp" class="nav-link" target="_blank" rel="noopener noreferrer">债务监测</a></div>
-    <div class="nav-button"><a href="./jsq.html" class="nav-link" target="_blank" rel="noopener noreferrer">退休计算</a></div>
-    <div class="nav-button"><a href="http://www.jste.net.cn/uids/index.jsp" class="nav-link" target="_blank" rel="noopener noreferrer">江苏教师</a></div>
-    <div class="nav-button"><a href="https://sqgbxy.101.com/portal/home" class="nav-link" target="_blank" rel="noopener noreferrer">宿迁干部</a></div>
-    <div class="nav-button"><a href="./down.html" class="nav-link" target="_blank" rel="noopener noreferrer">常用软件</a></div>
-    <div class="nav-button"><a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink" class="nav-link" target="_blank" rel="noopener noreferrer">账号密码</a></div>
-    <div class="nav-button"><a href="https://www.hujiuxi.top:8888/" class="nav-link" target="_blank" rel="noopener noreferrer">老九博客</a></div>
- 
+    <!-- 1~24 原有链接 -->
+    <a href="http://10.65.248.23/magno/render"          class="nav-button" target="_blank" rel="noopener noreferrer">财政一体化</a>
+    <a href="https://rs.jshrss.jiangsu.gov.cn/index/"   class="nav-button" target="_blank" rel="noopener noreferrer">江苏人社</a>
+    <a href="https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index" class="nav-button" target="_blank" rel="noopener noreferrer">医疗保险</a>
+    <a href="https://wt.sqzfgjj.com/ish"                class="nav-button" target="_blank" rel="noopener noreferrer">公积金</a>
+    <a href="http://10.65.205.44/fcfa/index.html?t=20200224#sysManage/workFlow/workFlowMoniterDialog" class="nav-button" target="_blank" rel="noopener noreferrer">资产云</a>
+    <a href="http://tybb.jscz.gov.cn/"                  class="nav-button" target="_blank" rel="noopener noreferrer">资产月报</a>
+    <a href="https://hlwglt.jsbchina.cn:8080/login.html"class="nav-button" target="_blank" rel="noopener noreferrer">江苏银行</a>
+    <a href="https://buyer.sq12315.com/#/login"         class="nav-button" target="_blank" rel="noopener noreferrer">阳光直采</a>
+    <a href="https://ygst.jsed.edu.cn"                 class="nav-button" target="_blank" rel="noopener noreferrer">阳光监督</a>
+    <a href="http://mail.163.com/"                      class="nav-button" target="_blank" rel="noopener noreferrer">网易邮箱</a>
+    <a href="https://mail.qq.com/"                      class="nav-button" target="_blank" rel="noopener noreferrer">QQ邮箱</a>
+    <a href="https://web.yunbg.vip:1443/"               class="nav-button" target="_blank" rel="noopener noreferrer">办公平台</a>
+    <a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-button" target="_blank" rel="noopener noreferrer">统计直报</a>
+    <a href="http://202.205.176.94/JYJF4/login/login_toIndex" class="nav-button" target="_blank" rel="noopener noreferrer">经费年报</a>
+    <a href="http://jszfcg.jscz.gov.cn/jszc/login"      class="nav-button" target="_blank" rel="noopener noreferrer">政府采购</a>
+    <a href="https://tjxt.moe.edu.cn:8000"              class="nav-button" target="_blank" rel="noopener noreferrer">教育统计</a>
+    <a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login"class="nav-button" target="_blank" rel="noopener noreferrer">法人业务</a>
+    <a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp"class="nav-button" target="_blank" rel="noopener noreferrer">债务监测</a>
+    <a href="./jsq.html"                                class="nav-button" target="_blank" rel="noopener noreferrer">退休计算</a>
+    <a href="http://www.jste.net.cn/uids/index.jsp"     class="nav-button" target="_blank" rel="noopener noreferrer">江苏教师</a>
+    <a href="https://sqgbxy.101.com/portal/home"        class="nav-button" target="_blank" rel="noopener noreferrer">宿迁干部</a>
+    <a href="./down.html"                               class="nav-button" target="_blank" rel="noopener noreferrer">常用软件</a>
+    <a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink" class="nav-button" target="_blank" rel="noopener noreferrer">账号密码</a>
+    <a href="https://www.hujiuxi.top:8888/"             class="nav-button" target="_blank" rel="noopener noreferrer">老九博客</a>
+
    
   </div>
+
 </body>
 </html>
