@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>儿童英文字母学习中心</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #4a6ee0;
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+        }
+        
+        .game-selector {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .game-btn {
+            background-color: #4a6ee0;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(74, 110, 224, 0.3);
+        }
+        
+        .game-btn:hover {
+            background-color: #3a5ec0;
+            transform: translateY(-3px);
+        }
+        
+        .game-btn.active {
+            background-color: #ff6b6b;
+            box-shadow: 0 4px 8px rgba(255, 107, 107, 0.4);
+        }
+        
+        .game-container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            min-height: 500px;
+        }
+        
+        .game-instructions {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .current-score {
+            color: #4a6ee0;
+        }
+        
+        .high-score {
+            color: #ff6b6b;
+        }
+        
+        .letter-display {
+            font-size: 120px;
+            font-weight: bold;
+            color: #4a6ee0;
+            margin: 20px 0;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+        }
+        
+        .controls {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        button {
+            background-color: #4a6ee0;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(74, 110, 224, 0.3);
+        }
+        
+        button:hover {
+            background-color: #3a5ec0;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .option {
+            background-color: #f5f7ff;
+            border: 3px solid #d0d9ff;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .option:hover {
+            background-color: #e6ecff;
+            transform: scale(1.05);
+        }
+        
+        .correct {
+            background-color: #a8e6cf;
+            border-color: #5cdb95;
+        }
+        
+        .incorrect {
+            background-color: #ffaaa5;
+            border-color: #ff6b6b;
+        }
+        
+        .feedback {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 40px;
+            text-align: center;
+        }
+        
+        .correct-feedback {
+            color: #2e8b57;
+        }
+        
+        .incorrect-feedback {
+            color: #d63447;
+        }
+        
+        .game-over {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a6ee0;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        /* 大小写匹配游戏特定样式 */
+        .matching-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .letter-card {
+            background-color: #f5f7ff;
+            border: 3px solid #d0d9ff;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100px;
+        }
+        
+        .letter-card.selected {
+            background-color: #ffeaa7;
+            border-color: #fdcb6e;
+        }
+        
+        .letter-card.matched {
+            background-color: #a8e6cf;
+            border-color: #5cdb95;
+            cursor: default;
+        }
+        
+        /* 字母排序游戏特定样式 */
+        .sorting-game {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        .sort-letter {
+            background-color: #f5f7ff;
+            border: 3px solid #d0d9ff;
+            border-radius: 15px;
+            padding: 15px 20px;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sort-letter:hover {
+            background-color: #e6ecff;
+        }
+        
+        .sort-letter.placed {
+            background-color: #a8e6cf;
+            border-color: #5cdb95;
+            cursor: default;
+        }
+        
+        .sort-slots {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 30px;
+        }
+        
+        .sort-slot {
+            width: 70px;
+            height: 70px;
+            border: 3px dashed #d0d9ff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #999;
+        }
+        
+        .sort-slot.filled {
+            border: 3px solid #5cdb95;
+            background-color: #a8e6cf;
+            color: #2e8b57;
+        }
+        
+        /* 找字母游戏特定样式 */
+        .find-letter-game {
+            text-align: center;
+        }
+        
+        .letter-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 10px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+        
+        .grid-letter {
+            background-color: #f5f7ff;
+            border: 3px solid #d0d9ff;
+            border-radius: 10px;
+            padding: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .grid-letter.target {
+            background-color: #ffeaa7;
+            border-color: #fdcb6e;
+        }
+        
+        .grid-letter.found {
+            background-color: #a8e6cf;
+            border-color: #5cdb95;
+            cursor: default;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .options-container, .matching-game {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .letter-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .letter-display {
+                font-size: 100px;
+                height: 120px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .options-container, .matching-game, .letter-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-btn {
+                padding: 10px 15px;
+                font-size: 1rem;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>儿童英文字母学习中心</h1>
+            <p class="subtitle">通过多种有趣游戏学习26个英文字母</p>
+        </header>
+        
+        <div class="game-selector">
+            <button class="game-btn active" data-game="sound">字母发音匹配</button>
+            <button class="game-btn" data-game="matching">字母大小写配对</button>
+            <button class="game-btn" data-game="sorting">字母排序游戏</button>
+            <button class="game-btn" data-game="finding">找字母游戏</button>
+        </div>
+        
+        <div class="game-container">
+            <!-- 字母发音匹配游戏 -->
+            <div id="sound-game" class="game-content">
+                <p class="game-instructions">听字母发音，然后选择正确的字母！</p>
+                
+                <div class="score-container">
+                    <div class="current-score">得分: <span id="score">0</span></div>
+                    <div class="high-score">最高分: <span id="high-score">0</span></div>
+                </div>
+                
+                <div class="letter-display" id="letter-display">?</div>
+                
+                <div class="controls">
+                    <button id="play-sound">播放发音</button>
+                    <button id="next-letter">下一个字母</button>
+                </div>
+                
+                <div class="feedback" id="feedback"></div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- 选项将通过JavaScript动态生成 -->
+                </div>
+            </div>
+            
+            <!-- 字母大小写配对游戏 -->
+            <div id="matching-game" class="game-content hidden">
+                <p class="game-instructions">点击配对的大小写字母！找到所有匹配的字母对。</p>
+                
+                <div class="score-container">
+                    <div class="current-score">得分: <span id="matching-score">0</span></div>
+                    <div class="high-score">最高分: <span id="matching-high-score">0</span></div>
+                </div>
+                
+                <div class="matching-game" id="matching-container">
+                    <!-- 字母卡片将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="feedback" id="matching-feedback"></div>
+                
+                <div class="controls">
+                    <button id="restart-matching">重新开始</button>
+                </div>
+            </div>
+            
+            <!-- 字母排序游戏 -->
+            <div id="sorting-game" class="game-content hidden">
+                <p class="game-instructions">将字母按正确顺序排列！点击字母然后点击空位放置。</p>
+                
+                <div class="score-container">
+                    <div class="current-score">得分: <span id="sorting-score">0</span></div>
+                    <div class="high-score">最高分: <span id="sorting-high-score">0</span></div>
+                </div>
+                
+                <div class="sorting-game" id="letter-pool">
+                    <!-- 字母将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="sort-slots" id="sort-slots">
+                    <!-- 排序槽位将通过JavaScript动态生成 -->
+                </div>
+                
+                <div class="feedback" id="sorting-feedback"></div>
+                
+                <div class="controls">
+                    <button id="check-sorting">检查答案</button>
+                    <button id="restart-sorting">重新开始</button>
+                </div>
+            </div>
+            
+            <!-- 找字母游戏 -->
+            <div id="finding-game" class="game-content hidden">
+                <p class="game-instructions">找到所有指定的字母！点击正确的字母得分。</p>
+                
+                <div class="score-container">
+                    <div class="current-score">找到: <span id="found-count">0</span>/<span id="total-count">0</span></div>
+                    <div class="high-score">最高分: <span id="finding-high-score">0</span></div>
+                </div>
+                
+                <div class="find-letter-game">
+                    <div class="letter-display" id="target-letter">A</div>
+                    <div class="letter-grid" id="letter-grid">
+                        <!-- 字母网格将通过JavaScript动态生成 -->
+                    </div>
+                </div>
+                
+                <div class="feedback" id="finding-feedback"></div>
+                
+                <div class="controls">
+                    <button id="next-target">下一个字母</button>
+                    <button id="restart-finding">重新开始</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 游戏切换逻辑
+            const gameButtons = document.querySelectorAll('.game-btn');
+            const gameContents = document.querySelectorAll('.game-content');
+            
+            gameButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const gameId = this.getAttribute('data-game');
+                    
+                    // 更新活动按钮
+                    gameButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 显示对应的游戏内容
+                    gameContents.forEach(content => content.classList.add('hidden'));
+                    document.getElementById(`${gameId}-game`).classList.remove('hidden');
+                    
+                    // 初始化游戏
+                    if (gameId === 'sound') {
+                        initSoundGame();
+                    } else if (gameId === 'matching') {
+                        initMatchingGame();
+                    } else if (gameId === 'sorting') {
+                        initSortingGame();
+                    } else if (gameId === 'finding') {
+                        initFindingGame();
+                    }
+                });
+            });
+            
+            // 字母发音匹配游戏
+            function initSoundGame() {
+                const letterDisplay = document.getElementById('letter-display');
+                const playSoundBtn = document.getElementById('play-sound');
+                const nextLetterBtn = document.getElementById('next-letter');
+                const optionsContainer = document.getElementById('options-container');
+                const scoreDisplay = document.getElementById('score');
+                const highScoreDisplay = document.getElementById('high-score');
+                const feedbackDisplay = document.getElementById('feedback');
+                
+                let currentLetter = '';
+                let score = 0;
+                let highScore = localStorage.getItem('alphabetHighScore') || 0;
+                let isGameActive = true;
+                let correctOptionIndex = 0;
+                
+                highScoreDisplay.textContent = highScore;
+                const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                
+                function initGame() {
+                    score = 0;
+                    scoreDisplay.textContent = score;
+                    feedbackDisplay.textContent = '';
+                    isGameActive = true;
+                    generateNewLetter();
+                }
+                
+                function generateNewLetter() {
+                    const randomIndex = Math.floor(Math.random() * alphabet.length);
+                    currentLetter = alphabet[randomIndex];
+                    
+                    letterDisplay.textContent = '?';
+                    generateOptions(currentLetter);
+                    
+                    feedbackDisplay.textContent = '';
+                    feedbackDisplay.className = 'feedback';
+                    
+                    const options = document.querySelectorAll('.option');
+                    options.forEach(option => {
+                        option.style.pointerEvents = 'auto';
+                        option.classList.remove('correct', 'incorrect');
+                    });
+                }
+                
+                function generateOptions(correctLetter) {
+                    optionsContainer.innerHTML = '';
+                    
+                    let options = [correctLetter];
+                    
+                    while (options.length < 4) {
+                        const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+                        if (!options.includes(randomLetter)) {
+                            options.push(randomLetter);
+                        }
+                    }
+                    
+                    options.sort(() => Math.random() - 0.5);
+                    correctOptionIndex = options.indexOf(correctLetter);
+                    
+                    options.forEach(letter => {
+                        const optionElement = document.createElement('div');
+                        optionElement.className = 'option';
+                        optionElement.textContent = letter;
+                        optionElement.addEventListener('click', () => checkAnswer(letter, optionElement));
+                        optionsContainer.appendChild(optionElement);
+                    });
+                }
+                
+                function checkAnswer(selectedLetter, optionElement) {
+                    if (!isGameActive) return;
+                    
+                    const options = document.querySelectorAll('.option');
+                    options.forEach(option => {
+                        option.style.pointerEvents = 'none';
+                    });
+                    
+                    letterDisplay.textContent = currentLetter;
+                    
+                    if (selectedLetter === currentLetter) {
+                        optionElement.classList.add('correct');
+                        score += 10;
+                        scoreDisplay.textContent = score;
+                        
+                        feedbackDisplay.textContent = '太棒了！答对了！';
+                        feedbackDisplay.className = 'feedback correct-feedback';
+                        
+                        if (score > highScore) {
+                            highScore = score;
+                            highScoreDisplay.textContent = highScore;
+                            localStorage.setItem('alphabetHighScore', highScore);
+                        }
+                    } else {
+                        optionElement.classList.add('incorrect');
+                        options[correctOptionIndex].classList.add('correct');
+                        
+                        feedbackDisplay.textContent = `再试一次！正确答案是: ${currentLetter}`;
+                        feedbackDisplay.className = 'feedback incorrect-feedback';
+                        
+                        isGameActive = false;
+                        setTimeout(() => {
+                            feedbackDisplay.innerHTML = `<div class="game-over">游戏结束！你的得分: ${score}</div>`;
+                        }, 1500);
+                    }
+                }
+                
+                function playLetterSound() {
+                    if ('speechSynthesis' in window) {
+                        const utterance = new SpeechSynthesisUtterance(currentLetter);
+                        utterance.lang = 'en-US';
+                        utterance.rate = 0.8;
+                        speechSynthesis.speak(utterance);
+                    } else {
+                        alert('您的浏览器不支持语音合成功能，请使用Chrome、Edge或Safari等现代浏览器。');
+                    }
+                }
+                
+                playSoundBtn.addEventListener('click', playLetterSound);
+                
+                nextLetterBtn.addEventListener('click', function() {
+                    if (isGameActive) {
+                        generateNewLetter();
+                        playLetterSound();
+                    } else {
+                        initGame();
+                        playLetterSound();
+                    }
+                });
+                
+                initGame();
+                playLetterSound();
+            }
+            
+            // 字母大小写配对游戏
+            function initMatchingGame() {
+                const matchingContainer = document.getElementById('matching-container');
+                const scoreDisplay = document.getElementById('matching-score');
+                const highScoreDisplay = document.getElementById('matching-high-score');
+                const feedbackDisplay = document.getElementById('matching-feedback');
+                const restartBtn = document.getElementById('restart-matching');
+                
+                let score = 0;
+                let highScore = localStorage.getItem('matchingHighScore') || 0;
+                let selectedCard = null;
+                let matchedPairs = 0;
+                const totalPairs = 8;
+                
+                highScoreDisplay.textContent = highScore;
+                
+                function initGame() {
+                    score = 0;
+                    matchedPairs = 0;
+                    scoreDisplay.textContent = score;
+                    feedbackDisplay.textContent = '';
+                    matchingContainer.innerHTML = '';
+                    
+                    // 创建字母对（大写和小写）
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                    const selectedLetters = [];
+                    
+                    while (selectedLetters.length < totalPairs) {
+                        const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                        if (!selectedLetters.includes(randomLetter)) {
+                            selectedLetters.push(randomLetter);
+                        }
+                    }
+                    
+                    // 创建卡片数组
+                    const cards = [];
+                    selectedLetters.forEach(letter => {
+                        cards.push({ type: 'uppercase', value: letter });
+                        cards.push({ type: 'lowercase', value: letter.toLowerCase() });
+                    });
+                    
+                    // 洗牌
+                    cards.sort(() => Math.random() - 0.5);
+                    
+                    // 创建卡片元素
+                    cards.forEach(card => {
+                        const cardElement = document.createElement('div');
+                        cardElement.className = 'letter-card';
+                        cardElement.textContent = card.value;
+                        cardElement.dataset.type = card.type;
+                        cardElement.dataset.letter = card.value.toUpperCase();
+                        
+                        cardElement.addEventListener('click', () => selectCard(cardElement));
+                        matchingContainer.appendChild(cardElement);
+                    });
+                }
+                
+                function selectCard(card) {
+                    if (card.classList.contains('matched') || card.classList.contains('selected')) {
+                        return;
+                    }
+                    
+                    card.classList.add('selected');
+                    
+                    if (selectedCard === null) {
+                        selectedCard = card;
+                    } else {
+                        // 检查是否匹配
+                        if (selectedCard.dataset.letter === card.dataset.letter && 
+                            selectedCard.dataset.type !== card.dataset.type) {
+                            // 匹配成功
+                            selectedCard.classList.add('matched');
+                            card.classList.add('matched');
+                            selectedCard = null;
+                            matchedPairs++;
+                            score += 10;
+                            scoreDisplay.textContent = score;
+                            
+                            if (matchedPairs === totalPairs) {
+                                feedbackDisplay.innerHTML = `<div class="game-over">恭喜！你完成了所有配对！得分: ${score}</div>`;
+                                
+                                if (score > highScore) {
+                                    highScore = score;
+                                    highScoreDisplay.textContent = highScore;
+                                    localStorage.setItem('matchingHighScore', highScore);
+                                }
+                            }
+                        } else {
+                            // 不匹配
+                            setTimeout(() => {
+                                selectedCard.classList.remove('selected');
+                                card.classList.remove('selected');
+                                selectedCard = null;
+                            }, 1000);
+                        }
+                    }
+                }
+                
+                restartBtn.addEventListener('click', initGame);
+                initGame();
+            }
+            
+            // 字母排序游戏
+            function initSortingGame() {
+                const letterPool = document.getElementById('letter-pool');
+                const sortSlots = document.getElementById('sort-slots');
+                const scoreDisplay = document.getElementById('sorting-score');
+                const highScoreDisplay = document.getElementById('sorting-high-score');
+                const feedbackDisplay = document.getElementById('sorting-feedback');
+                const checkBtn = document.getElementById('check-sorting');
+                const restartBtn = document.getElementById('restart-sorting');
+                
+                let score = 0;
+                let highScore = localStorage.getItem('sortingHighScore') || 0;
+                let selectedLetter = null;
+                const sequenceLength = 6;
+                
+                highScoreDisplay.textContent = highScore;
+                
+                function initGame() {
+                    score = 0;
+                    scoreDisplay.textContent = score;
+                    feedbackDisplay.textContent = '';
+                    letterPool.innerHTML = '';
+                    sortSlots.innerHTML = '';
+                    
+                    // 生成随机字母序列
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                    const startIndex = Math.floor(Math.random() * (letters.length - sequenceLength));
+                    const sequence = letters.slice(startIndex, startIndex + sequenceLength);
+                    
+                    // 创建字母池（打乱顺序）
+                    const shuffledSequence = [...sequence].sort(() => Math.random() - 0.5);
+                    
+                    shuffledSequence.forEach(letter => {
+                        const letterElement = document.createElement('div');
+                        letterElement.className = 'sort-letter';
+                        letterElement.textContent = letter;
+                        letterElement.addEventListener('click', () => {
+                            if (!letterElement.classList.contains('placed')) {
+                                selectedLetter = letterElement;
+                                highlightSlots();
+                            }
+                        });
+                        letterPool.appendChild(letterElement);
+                    });
+                    
+                    // 创建排序槽位
+                    for (let i = 0; i < sequenceLength; i++) {
+                        const slotElement = document.createElement('div');
+                        slotElement.className = 'sort-slot';
+                        slotElement.textContent = i + 1;
+                        slotElement.addEventListener('click', () => placeLetter(slotElement, i));
+                        sortSlots.appendChild(slotElement);
+                    }
+                }
+                
+                function highlightSlots() {
+                    const slots = document.querySelectorAll('.sort-slot');
+                    slots.forEach(slot => {
+                        if (!slot.classList.contains('filled')) {
+                            slot.style.borderColor = '#ff6b6b';
+                            slot.style.cursor = 'pointer';
+                        }
+                    });
+                }
+                
+                function removeHighlight() {
+                    const slots = document.querySelectorAll('.sort-slot');
+                    slots.forEach(slot => {
+                        slot.style.borderColor = '';
+                        slot.style.cursor = '';
+                    });
+                }
+                
+                function placeLetter(slot, index) {
+                    if (selectedLetter && !slot.classList.contains('filled')) {
+                        slot.textContent = selectedLetter.textContent;
+                        slot.classList.add('filled');
+                        selectedLetter.classList.add('placed');
+                        selectedLetter.style.visibility = 'hidden';
+                        selectedLetter = null;
+                        removeHighlight();
+                    }
+                }
+                
+                function checkOrder() {
+                    const slots = document.querySelectorAll('.sort-slot');
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                    let correct = true;
+                    
+                    for (let i = 0; i < slots.length - 1; i++) {
+                        const currentIndex = letters.indexOf(slots[i].textContent);
+                        const nextIndex = letters.indexOf(slots[i+1].textContent);
+                        
+                        if (currentIndex >= nextIndex) {
+                            correct = false;
+                            break;
+                        }
+                    }
+                    
+                    if (correct) {
+                        score += 20;
+                        scoreDisplay.textContent = score;
+                        feedbackDisplay.textContent = '太棒了！顺序正确！';
+                        feedbackDisplay.className = 'feedback correct-feedback';
+                        
+                        if (score > highScore) {
+                            highScore = score;
+                            highScoreDisplay.textContent = highScore;
+                            localStorage.setItem('sortingHighScore', highScore);
+                        }
+                    } else {
+                        feedbackDisplay.textContent = '顺序不对，再试一次！';
+                        feedbackDisplay.className = 'feedback incorrect-feedback';
+                    }
+                }
+                
+                checkBtn.addEventListener('click', checkOrder);
+                restartBtn.addEventListener('click', initGame);
+                initGame();
+            }
+            
+            // 找字母游戏
+            function initFindingGame() {
+                const targetLetterDisplay = document.getElementById('target-letter');
+                const letterGrid = document.getElementById('letter-grid');
+                const foundCountDisplay = document.getElementById('found-count');
+                const totalCountDisplay = document.getElementById('total-count');
+                const highScoreDisplay = document.getElementById('finding-high-score');
+                const feedbackDisplay = document.getElementById('finding-feedback');
+                const nextTargetBtn = document.getElementById('next-target');
+                const restartBtn = document.getElementById('restart-finding');
+                
+                let foundCount = 0;
+                let totalCount = 0;
+                let highScore = localStorage.getItem('findingHighScore') || 0;
+                let currentTarget = '';
+                
+                highScoreDisplay.textContent = highScore;
+                
+                function initGame() {
+                    foundCount = 0;
+                    totalCount = 8; // 每次找8个目标字母
+                    foundCountDisplay.textContent = foundCount;
+                    totalCountDisplay.textContent = totalCount;
+                    feedbackDisplay.textContent = '';
+                    letterGrid.innerHTML = '';
+                    
+                    // 随机选择目标字母
+                    const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+                    currentTarget = letters[Math.floor(Math.random() * letters.length)];
+                    targetLetterDisplay.textContent = currentTarget;
+                    
+                    // 创建字母网格（6x6）
+                    const gridLetters = [];
+                    
+                    // 添加目标字母
+                    for (let i = 0; i < totalCount; i++) {
+                        gridLetters.push(currentTarget);
+                    }
+                    
+                    // 添加其他随机字母填满网格
+                    while (gridLetters.length < 36) {
+                        const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+                        if (randomLetter !== currentTarget) {
+                            gridLetters.push(randomLetter);
+                        }
+                    }
+                    
+                    // 打乱顺序
+                    gridLetters.sort(() => Math.random() - 0.5);
+                    
+                    // 创建网格元素
+                    gridLetters.forEach(letter => {
+                        const letterElement = document.createElement('div');
+                        letterElement.className = 'grid-letter';
+                        letterElement.textContent = letter;
+                        
+                        if (letter === currentTarget) {
+                            letterElement.classList.add('target');
+                        }
+                        
+                        letterElement.addEventListener('click', () => {
+                            if (letter === currentTarget && !letterElement.classList.contains('found')) {
+                                letterElement.classList.add('found');
+                                foundCount++;
+                                foundCountDisplay.textContent = foundCount;
+                                
+                                if (foundCount === totalCount) {
+                                    feedbackDisplay.innerHTML = `<div class="game-over">恭喜！你找到了所有${currentTarget}字母！</div>`;
+                                    
+                                    // 更新最高分
+                                    const currentScore = parseInt(highScoreDisplay.textContent) || 0;
+                                    if (foundCount > currentScore) {
+                                        highScore = foundCount;
+                                        highScoreDisplay.textContent = highScore;
+                                        localStorage.setItem('findingHighScore', highScore);
+                                    }
+                                }
+                            }
+                        });
+                        
+                        letterGrid.appendChild(letterElement);
+                    });
+                }
+                
+                nextTargetBtn.addEventListener('click', initGame);
+                restartBtn.addEventListener('click', initGame);
+                initGame();
+            }
+            
+            // 默认初始化第一个游戏
+            initSoundGame();
+        });
+    </script>
+</body>
+</html>
