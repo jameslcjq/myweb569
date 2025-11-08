@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>英文字母发音学习</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f9ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #4a6ee0;
+            margin-top: 0;
+            font-size: 2.2rem;
+        }
+        
+        .instructions {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+        
+        .score-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .current-score {
+            color: #4a6ee0;
+        }
+        
+        .high-score {
+            color: #ff6b6b;
+        }
+        
+        .letter-display {
+            font-size: 120px;
+            font-weight: bold;
+            color: #4a6ee0;
+            margin: 20px 0;
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .controls {
+            margin: 20px 0;
+        }
+        
+        button {
+            background-color: #4a6ee0;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin: 0 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 8px rgba(74, 110, 224, 0.3);
+        }
+        
+        button:hover {
+            background-color: #3a5ec0;
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .option {
+            background-color: #f5f7ff;
+            border: 3px solid #d0d9ff;
+            border-radius: 15px;
+            padding: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .option:hover {
+            background-color: #e6ecff;
+            transform: scale(1.05);
+        }
+        
+        .correct {
+            background-color: #a8e6cf;
+            border-color: #5cdb95;
+        }
+        
+        .incorrect {
+            background-color: #ffaaa5;
+            border-color: #ff6b6b;
+        }
+        
+        .feedback {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 20px 0;
+            min-height: 40px;
+        }
+        
+        .correct-feedback {
+            color: #2e8b57;
+        }
+        
+        .incorrect-feedback {
+            color: #d63447;
+        }
+        
+        .game-over {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4a6ee0;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 600px) {
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .letter-display {
+                font-size: 100px;
+                height: 120px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>英文字母发音学习</h1>
+        <p class="instructions">听字母发音，然后选择正确的字母！</p>
+        
+        <div class="score-container">
+            <div class="current-score">得分: <span id="score">0</span></div>
+            <div class="high-score">最高分: <span id="high-score">0</span></div>
+        </div>
+        
+        <div class="letter-display" id="letter-display">?</div>
+        
+        <div class="controls">
+            <button id="play-sound">播放发音</button>
+            <button id="next-letter">下一个字母</button>
+        </div>
+        
+        <div class="feedback" id="feedback"></div>
+        
+        <div class="options-container" id="options-container">
+            <!-- 选项将通过JavaScript动态生成 -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 游戏元素
+            const letterDisplay = document.getElementById('letter-display');
+            const playSoundBtn = document.getElementById('play-sound');
+            const nextLetterBtn = document.getElementById('next-letter');
+            const optionsContainer = document.getElementById('options-container');
+            const scoreDisplay = document.getElementById('score');
+            const highScoreDisplay = document.getElementById('high-score');
+            const feedbackDisplay = document.getElementById('feedback');
+            
+            // 游戏变量
+            let currentLetter = '';
+            let score = 0;
+            let highScore = localStorage.getItem('alphabetHighScore') || 0;
+            let isGameActive = true;
+            let correctOptionIndex = 0;
+            
+            // 初始化最高分显示
+            highScoreDisplay.textContent = highScore;
+            
+            // 英文字母数组
+            const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+            
+            // 初始化游戏
+            initGame();
+            
+            // 初始化游戏函数
+            function initGame() {
+                score = 0;
+                scoreDisplay.textContent = score;
+                feedbackDisplay.textContent = '';
+                isGameActive = true;
+                generateNewLetter();
+            }
+            
+            // 生成新字母
+            function generateNewLetter() {
+                // 随机选择一个字母
+                const randomIndex = Math.floor(Math.random() * alphabet.length);
+                currentLetter = alphabet[randomIndex];
+                
+                // 显示问号而不是字母
+                letterDisplay.textContent = '?';
+                
+                // 生成选项（1个正确答案和3个错误答案）
+                generateOptions(currentLetter);
+                
+                // 重置反馈
+                feedbackDisplay.textContent = '';
+                feedbackDisplay.className = 'feedback';
+                
+                // 启用所有选项
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.style.pointerEvents = 'auto';
+                    option.classList.remove('correct', 'incorrect');
+                });
+            }
+            
+            // 生成选项
+            function generateOptions(correctLetter) {
+                // 清空选项容器
+                optionsContainer.innerHTML = '';
+                
+                // 创建包含正确答案的选项数组
+                let options = [correctLetter];
+                
+                // 添加3个不同的错误选项
+                while (options.length < 4) {
+                    const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+                    if (!options.includes(randomLetter)) {
+                        options.push(randomLetter);
+                    }
+                }
+                
+                // 随机排序选项
+                options.sort(() => Math.random() - 0.5);
+                
+                // 记录正确答案的索引
+                correctOptionIndex = options.indexOf(correctLetter);
+                
+                // 创建选项元素
+                options.forEach(letter => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = letter;
+                    optionElement.addEventListener('click', () => checkAnswer(letter, optionElement));
+                    optionsContainer.appendChild(optionElement);
+                });
+            }
+            
+            // 检查答案
+            function checkAnswer(selectedLetter, optionElement) {
+                if (!isGameActive) return;
+                
+                // 禁用所有选项
+                const options = document.querySelectorAll('.option');
+                options.forEach(option => {
+                    option.style.pointerEvents = 'none';
+                });
+                
+                // 显示正确答案
+                letterDisplay.textContent = currentLetter;
+                
+                // 检查答案是否正确
+                if (selectedLetter === currentLetter) {
+                    // 正确答案
+                    optionElement.classList.add('correct');
+                    score += 10;
+                    scoreDisplay.textContent = score;
+                    
+                    // 显示反馈
+                    feedbackDisplay.textContent = '太棒了！答对了！';
+                    feedbackDisplay.className = 'feedback correct-feedback';
+                    
+                    // 更新最高分
+                    if (score > highScore) {
+                        highScore = score;
+                        highScoreDisplay.textContent = highScore;
+                        localStorage.setItem('alphabetHighScore', highScore);
+                    }
+                } else {
+                    // 错误答案
+                    optionElement.classList.add('incorrect');
+                    // 高亮显示正确答案
+                    options[correctOptionIndex].classList.add('correct');
+                    
+                    // 显示反馈
+                    feedbackDisplay.textContent = `再试一次！正确答案是: ${currentLetter}`;
+                    feedbackDisplay.className = 'feedback incorrect-feedback';
+                    
+                    // 游戏结束
+                    isGameActive = false;
+                    setTimeout(() => {
+                        feedbackDisplay.innerHTML = `<div class="game-over">游戏结束！你的得分: ${score}</div>`;
+                    }, 1500);
+                }
+            }
+            
+            // 播放字母发音
+            function playLetterSound() {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(currentLetter);
+                    utterance.lang = 'en-US';
+                    utterance.rate = 0.8; // 稍慢的语速，适合孩子
+                    speechSynthesis.speak(utterance);
+                } else {
+                    alert('您的浏览器不支持语音合成功能，请使用Chrome、Edge或Safari等现代浏览器。');
+                }
+            }
+            
+            // 事件监听器
+            playSoundBtn.addEventListener('click', playLetterSound);
+            
+            nextLetterBtn.addEventListener('click', function() {
+                if (isGameActive) {
+                    generateNewLetter();
+                    playLetterSound();
+                } else {
+                    // 游戏结束后点击"下一个字母"重新开始游戏
+                    initGame();
+                    playLetterSound();
+                }
+            });
+            
+            // 初始播放字母发音
+            playLetterSound();
+        });
+    </script>
+</body>
+</html>
