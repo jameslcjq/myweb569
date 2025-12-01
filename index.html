@@ -7,37 +7,81 @@
   <style>
     /* ========= 页面整体 ========= */
     body{
-      background-image: url('./bg.jpg'); /* 添加背景图片 */
-      background-size: cover; /* 背景图片覆盖整个元素 */
-      background-position: center; /* 背景图片居中 */
-      background-repeat: no-repeat; /* 背景图片不重复 */
-      background-attachment: fixed; /* 背景图片固定 */
-      background-color: rgba(245,245,245, 0.2); /* 背景颜色，并设置80%透明度 */
+      background-image: url('./bg.jpg'); 
+      background-size: cover; 
+      background-position: center; 
+      background-repeat: no-repeat; 
+      background-attachment: fixed; 
+      background-color: rgba(245,245,245, 0.2); 
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       display:flex;flex-direction:column;align-items:center;
-      gap:20px;            /* 名片与按钮区间距 */
+      gap:15px;            /* 稍微减小间距 */
       padding-top:40px;margin:0;min-height:100vh;
     }
 
-    /* ========= 玻璃名片 ========= */
+    /* ========= 顶部标题卡片 (调整后) ========= */
     .card{
-      width:320px;padding:20px;border-radius:16px;
-      background:rgba(255,255,255,.1);backdrop-filter:blur(10px);
-      box-shadow:0 8px 24px rgba(0,0,0,.2);
-      border:1px solid rgba(255,255,255,.3);
-      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      width: 300px; /* 调整宽度：比下方的博客按钮(280px)略大 */
+      padding: 10px 0; /* 减小内边距，让它看起来变小 */
+      border-radius: 16px;
+      background: rgba(255,255,255,.1);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 24px rgba(0,0,0,.2);
+      border: 1px solid rgba(255,255,255,.3);
+      font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-    .row{display:flex;align-items:center;margin:12px 0;font-size:18px;}
-    .label{color:#003366;font-weight:bold;}
-    .value{margin-left:4px;color:#33aaff;text-shadow:0 0 3px #33aaff,0 0 6px #33aaff;}
-    .title{font-size:20px;margin-bottom:16px;}
+    
+    /* 标题文字样式优化，去除原来的&nbsp强行居中，改用Flex居中 */
+    .card-text {
+      font-size: 22px;
+      font-weight: bold;
+      color: #33aaff;
+      text-shadow: 0 0 3px #33aaff, 0 0 6px #33aaff;
+      margin: 5px 0;
+    }
+
+    /* ========= 老九的博客按钮 (调整后) ========= */
+    .blog-button {
+      width: 280px; /* 设定宽度，比上面的标题卡片略小 */
+      height: 60px;
+      display:flex;justify-content:center;align-items:center;
+      border-radius:30px; 
+      text-decoration:none;
+      font-size: 20px; font-weight: bold; color: #fff;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      
+      /* 渐变背景 */
+      background: linear-gradient(90deg, rgba(255,118,118,0.6) 0%, rgba(255,177,109,0.6) 100%);
+      box-shadow: 0 0 15px rgba(255, 150, 150, 0.5);
+      
+      /* 呼吸动画 */
+      animation: pulse-glow 2s infinite ease-in-out;
+      transition: all 0.3s ease;
+    }
+
+    .blog-button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(90deg, rgba(255,118,118,0.8) 0%, rgba(255,177,109,0.8) 100%);
+      box-shadow: 0 0 25px rgba(255, 150, 150, 0.8);
+      cursor: pointer;
+    }
+
+    @keyframes pulse-glow {
+      0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 150, 150, 0.4); }
+      50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(255, 150, 150, 0.7); border-color: rgba(255,255,255,0.9); }
+      100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 150, 150, 0.4); }
+    }
 
     /* ========= 导航按钮网格 ========= */
     .navigation-container{
       display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
       gap:50px;max-width:95vw;padding:40px;
+      padding-top: 10px; 
     }
-    /* 现在 nav-button 直接就是 <a> */
     .nav-button{
       width:160px;height:80px;
       display:flex;justify-content:center;align-items:center;
@@ -94,46 +138,52 @@
     }
     @media(max-width:480px){
       .navigation-container{grid-template-columns:1fr;grid-template-rows:repeat(36,1fr);gap:30px;}
+      .blog-button { width: 90%; }
+      .card { width: 95%; }
     }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <div class="row title"><span class="label"></span><span class="value">&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp老九的导航站</span></div>
+    <div class="card-text">老九的导航站</div>
   </div>
 
+  <a href="http://www.hujiuxi.top" class="blog-button" target="_blank" rel="noopener noreferrer">
+     老九的博客
+  </a>
+
   <div class="navigation-container">
-    <a href="http://10.65.248.23/magno/render"             class="nav-button" target="_blank" rel="noopener noreferrer">财政一体化</a>
-    <a href="https://rs.jshrss.jiangsu.gov.cn/index/"   class="nav-button" target="_blank" rel="noopener noreferrer">江苏人社</a>
+    <a href="http://10.65.248.23/magno/render" class="nav-button" target="_blank" rel="noopener noreferrer">财政一体化</a>
+    <a href="https://rs.jshrss.jiangsu.gov.cn/index/" class="nav-button" target="_blank" rel="noopener noreferrer">江苏人社</a>
     <a href="https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index" class="nav-button" target="_blank" rel="noopener noreferrer">医疗保险</a>
-    <a href="https://wt.sqzfgjj.cn/ish/"                   class="nav-button" target="_blank" rel="noopener noreferrer">公积金</a>
+    <a href="https://wt.sqzfgjj.cn/ish/" class="nav-button" target="_blank" rel="noopener noreferrer">公积金</a>
     <a href=" http://10.65.248.23/fcfa" class="nav-button" target="_blank" rel="noopener noreferrer">资产云</a>
-    <a href="http://tybb.jscz.gov.cn/"                   class="nav-button" target="_blank" rel="noopener noreferrer">资产月报</a>
+    <a href="http://tybb.jscz.gov.cn/" class="nav-button" target="_blank" rel="noopener noreferrer">资产月报</a>
     <a href="https://hlwglt.jsbchina.cn:8080/login.html"class="nav-button" target="_blank" rel="noopener noreferrer">江苏银行</a>
-    <a href="https://buyer.sq12315.com/#/login"           class="nav-button" target="_blank" rel="noopener noreferrer">阳光直采</a>
-    <a href="https://ygst.jsed.edu.cn"                   class="nav-button" target="_blank" rel="noopener noreferrer">阳光监督</a>
-    <a href="http://mail.163.com/"                       class="nav-button" target="_blank" rel="noopener noreferrer">网易邮箱</a>
-    <a href="https://mail.qq.com/"                       class="nav-button" target="_blank" rel="noopener noreferrer">QQ邮箱</a>
-    <a href="http://192.168.116.100:8880/"                 class="nav-button" target="_blank" rel="noopener noreferrer">办公平台</a>
+    <a href="https://buyer.sq12315.com/#/login" class="nav-button" target="_blank" rel="noopener noreferrer">阳光直采</a>
+    <a href="https://ygst.jsed.edu.cn" class="nav-button" target="_blank" rel="noopener noreferrer">阳光监督</a>
+    <a href="http://mail.163.com/" class="nav-button" target="_blank" rel="noopener noreferrer">网易邮箱</a>
+    <a href="https://mail.qq.com/" class="nav-button" target="_blank" rel="noopener noreferrer">QQ邮箱</a>
+    <a href="http://192.168.116.100:8880/" class="nav-button" target="_blank" rel="noopener noreferrer">办公平台</a>
     <a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-button" target="_blank" rel="noopener noreferrer">统计直报</a>
     <a href="http://202.205.176.94/JYJF4/login/login_toIndex" class="nav-button" target="_blank" rel="noopener noreferrer">经费年报</a>
-    <a href="http://jszfcg.jscz.gov.cn/jszc/login"       class="nav-button" target="_blank" rel="noopener noreferrer">政府采购</a>
-    <a href="https://tjxt.moe.edu.cn:8000"               class="nav-button" target="_blank" rel="noopener noreferrer">教育统计</a>
+    <a href="http://jszfcg.jscz.gov.cn/jszc/login" class="nav-button" target="_blank" rel="noopener noreferrer">政府采购</a>
+    <a href="https://tjxt.moe.edu.cn/#/" class="nav-button" target="_blank" rel="noopener noreferrer">教育统计</a>
     <a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login"class="nav-button" target="_blank" rel="noopener noreferrer">法人业务</a>
     <a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp"class="nav-button" target="_blank" rel="noopener noreferrer">债务监测</a>
-    <a href="./jsq.html"                                 class="nav-button" target="_blank" rel="noopener noreferrer">退休计算</a>
-    <a href="http://www.jste.net.cn/uids/index.jsp"     class="nav-button" target="_blank" rel="noopener noreferrer">江苏教师</a>
-    <a href="https://sqgbxy.101.com/portal/home"         class="nav-button" target="_blank" rel="noopener noreferrer">宿迁干部</a>
-    <a href="./down.html"                                class="nav-button" target="_blank" rel="noopener noreferrer">常用软件</a>
+    <a href="./jsq.html" class="nav-button" target="_blank" rel="noopener noreferrer">退休计算</a>
+    <a href="http://www.jste.net.cn/uids/index.jsp" class="nav-button" target="_blank" rel="noopener noreferrer">江苏教师</a>
+    <a href="https://sqgbxy.101.com/portal/home" class="nav-button" target="_blank" rel="noopener noreferrer">宿迁干部</a>
+    <a href="./down.html" class="nav-button" target="_blank" rel="noopener noreferrer">常用软件</a>
     <a href="./cwjc.html" class="nav-button" target="_blank" rel="noopener noreferrer">常用教程</a>
-    <a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink"                   class="nav-button" target="_blank" rel="noopener noreferrer">账号密码</a>
-    <a href="https://web.hujiuxi.top:5001"               class="nav-button" target="_blank" rel="noopener noreferrer">我的群晖</a>
-    <a href="http://www.github.com"               class="nav-button" target="_blank" rel="noopener noreferrer">Github</a>
-    <a href="https://chatgpt.com"               class="nav-button" target="_blank" rel="noopener noreferrer">Chatgpt</a>
-    <a href="https://gemini.google.com/"               class="nav-button" target="_blank" rel="noopener noreferrer">Gemini</a>
-    <a href="https://wwww.x.com"               class="nav-button" target="_blank" rel="noopener noreferrer">资讯X</a>
-    <a href="https://www.bilibili.com"               class="nav-button" target="_blank" rel="noopener noreferrer">哔哩哔哩</a>
+    <a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink" class="nav-button" target="_blank" rel="noopener noreferrer">账号密码</a>
+    <a href="https://web.hujiuxi.top:5001" class="nav-button" target="_blank" rel="noopener noreferrer">我的群晖</a>
+    <a href="http://www.github.com" class="nav-button" target="_blank" rel="noopener noreferrer">Github</a>
+    <a href="https://chatgpt.com" class="nav-button" target="_blank" rel="noopener noreferrer">Chatgpt</a>
+    <a href="https://gemini.google.com/" class="nav-button" target="_blank" rel="noopener noreferrer">Gemini</a>
+    <a href="https://wwww.x.com" class="nav-button" target="_blank" rel="noopener noreferrer">资讯X</a>
+    <a href="https://www.bilibili.com" class="nav-button" target="_blank" rel="noopener noreferrer">哔哩哔哩</a>
   </div>
 
 </body>
