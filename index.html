@@ -15,37 +15,23 @@
       background-color: rgba(245,245,245, 0.2); 
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       display:flex;flex-direction:column;align-items:center;
-      gap:15px;            /* 稍微减小间距 */
+      gap:20px;
       padding-top:40px;margin:0;min-height:100vh;
     }
 
-    /* ========= 顶部标题卡片 (调整后) ========= */
-    .card{
-      width: 300px; /* 调整宽度：比下方的博客按钮(280px)略大 */
-      padding: 10px 0; /* 减小内边距，让它看起来变小 */
-      border-radius: 16px;
-      background: rgba(255,255,255,.1);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 8px 24px rgba(0,0,0,.2);
-      border: 1px solid rgba(255,255,255,.3);
-      font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    /* ========= 头部双按钮容器 ========= */
+    .header-row {
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-    
-    /* 标题文字样式优化，去除原来的&nbsp强行居中，改用Flex居中 */
-    .card-text {
-      font-size: 22px;
-      font-weight: bold;
-      color: #33aaff;
-      text-shadow: 0 0 3px #33aaff, 0 0 6px #33aaff;
-      margin: 5px 0;
+      gap: 30px; /* 两个按钮之间的距离 */
+      width: 100%;
+      max-width: 800px;
     }
 
-    /* ========= 老九的博客按钮 (调整后) ========= */
-    .blog-button {
-      width: 280px; /* 设定宽度，比上面的标题卡片略小 */
+    /* ========= 头部通用胶囊样式 (共享) ========= */
+    .capsule-btn {
+      width: 240px; /* 稍微控制宽度，以便一行放两个 */
       height: 60px;
       display:flex;justify-content:center;align-items:center;
       border-radius:30px; 
@@ -53,34 +39,56 @@
       font-size: 20px; font-weight: bold; color: #fff;
       backdrop-filter: blur(10px);
       border: 2px solid rgba(255, 255, 255, 0.5);
-      
-      /* 渐变背景 */
-      background: linear-gradient(90deg, rgba(255,118,118,0.6) 0%, rgba(255,177,109,0.6) 100%);
-      box-shadow: 0 0 15px rgba(255, 150, 150, 0.5);
-      
-      /* 呼吸动画 */
-      animation: pulse-glow 2s infinite ease-in-out;
       transition: all 0.3s ease;
+      user-select: none; /* 防止文字被选中 */
     }
 
-    .blog-button:hover {
+    .capsule-btn:hover {
       transform: scale(1.05);
-      background: linear-gradient(90deg, rgba(255,118,118,0.8) 0%, rgba(255,177,109,0.8) 100%);
-      box-shadow: 0 0 25px rgba(255, 150, 150, 0.8);
       cursor: pointer;
     }
 
-    @keyframes pulse-glow {
-      0% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 150, 150, 0.4); }
-      50% { transform: scale(1.03); box-shadow: 0 0 20px rgba(255, 150, 150, 0.7); border-color: rgba(255,255,255,0.9); }
-      100% { transform: scale(1); box-shadow: 0 0 10px rgba(255, 150, 150, 0.4); }
+    /* --- 样式1：老九的导航站 (冰蓝风格 - 静态/主标题) --- */
+    .style-nav {
+      /* 蓝色渐变 */
+      background: linear-gradient(90deg, rgba(66, 165, 245, 0.5) 0%, rgba(33, 150, 243, 0.5) 100%);
+      box-shadow: 0 0 15px rgba(33, 150, 243, 0.4);
+      animation: pulse-blue 3s infinite ease-in-out; /* 呼吸慢一点，稳重 */
+    }
+    .style-nav:hover {
+      background: linear-gradient(90deg, rgba(66, 165, 245, 0.7) 0%, rgba(33, 150, 243, 0.7) 100%);
+      box-shadow: 0 0 25px rgba(33, 150, 243, 0.6);
+    }
+
+    /* --- 样式2：老九的博客 (暖橙风格 - 强调/跳转) --- */
+    .style-blog {
+      /* 橙红渐变 */
+      background: linear-gradient(90deg, rgba(255,118,118,0.5) 0%, rgba(255,177,109,0.5) 100%);
+      box-shadow: 0 0 15px rgba(255, 150, 150, 0.4);
+      animation: pulse-red 2s infinite ease-in-out; /* 呼吸快一点，活泼 */
+    }
+    .style-blog:hover {
+      background: linear-gradient(90deg, rgba(255,118,118,0.7) 0%, rgba(255,177,109,0.7) 100%);
+      box-shadow: 0 0 25px rgba(255, 150, 150, 0.6);
+    }
+
+    /* --- 呼吸动画定义 --- */
+    @keyframes pulse-blue {
+      0% { box-shadow: 0 0 10px rgba(33, 150, 243, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(33, 150, 243, 0.6); border-color: rgba(255,255,255,0.9); }
+      100% { box-shadow: 0 0 10px rgba(33, 150, 243, 0.3); }
+    }
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 10px rgba(255, 150, 150, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(255, 150, 150, 0.6); border-color: rgba(255,255,255,0.9); }
+      100% { box-shadow: 0 0 10px rgba(255, 150, 150, 0.3); }
     }
 
     /* ========= 导航按钮网格 ========= */
     .navigation-container{
       display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
       gap:50px;max-width:95vw;padding:40px;
-      padding-top: 10px; 
+      padding-top: 20px; 
     }
     .nav-button{
       width:160px;height:80px;
@@ -135,23 +143,27 @@
     @media(max-width:768px){
       .navigation-container{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(12,1fr);gap:40px;}
       .nav-button{width:140px;}
+      
+      /* 手机端头部调整：改为上下排列 */
+      .header-row { flex-direction: column; gap: 15px; }
+      .capsule-btn { width: 80%; }
     }
     @media(max-width:480px){
       .navigation-container{grid-template-columns:1fr;grid-template-rows:repeat(36,1fr);gap:30px;}
-      .blog-button { width: 90%; }
-      .card { width: 95%; }
     }
   </style>
 </head>
 <body>
 
-  <div class="card">
-    <div class="card-text">老九的导航站</div>
-  </div>
+  <div class="header-row">
+    <div class="capsule-btn style-nav">
+      老九的导航站
+    </div>
 
-  <a href="http://www.hujiuxi.top" class="blog-button" target="_blank" rel="noopener noreferrer">
-     老九的博客
-  </a>
+    <a href="http://www.hujiuxi.top" class="capsule-btn style-blog" target="_blank" rel="noopener noreferrer">
+      老九的博客
+    </a>
+  </div>
 
   <div class="navigation-container">
     <a href="http://10.65.248.23/magno/render" class="nav-button" target="_blank" rel="noopener noreferrer">财政一体化</a>
@@ -169,7 +181,7 @@
     <a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-button" target="_blank" rel="noopener noreferrer">统计直报</a>
     <a href="http://202.205.176.94/JYJF4/login/login_toIndex" class="nav-button" target="_blank" rel="noopener noreferrer">经费年报</a>
     <a href="http://jszfcg.jscz.gov.cn/jszc/login" class="nav-button" target="_blank" rel="noopener noreferrer">政府采购</a>
-    <a href="https://tjxt.moe.edu.cn/#/" class="nav-button" target="_blank" rel="noopener noreferrer">教育统计</a>
+    <a href="https://tjxt.moe.edu.cn:8000" class="nav-button" target="_blank" rel="noopener noreferrer">教育统计</a>
     <a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login"class="nav-button" target="_blank" rel="noopener noreferrer">法人业务</a>
     <a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp"class="nav-button" target="_blank" rel="noopener noreferrer">债务监测</a>
     <a href="./jsq.html" class="nav-button" target="_blank" rel="noopener noreferrer">退休计算</a>
