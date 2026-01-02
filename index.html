@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>老九的导航站</title>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  
   <style>
     /* ========= 页面整体 ========= */
     body{
@@ -18,6 +20,8 @@
       
       /* 顶部内边距：保持100px，让按钮靠下 */
       padding-top: 100px; 
+      /* 底部增加一些留白，防止统计栏贴底 */
+      padding-bottom: 40px; 
 
       /* 头部与下方网格的距离：保持75px */
       gap: 75px; 
@@ -95,7 +99,7 @@
       display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
       gap: 50px; 
       max-width:95vw;
-      padding: 0 40px 40px 40px; 
+      padding: 0 40px 0 40px; /* 底部padding去掉，由body控制 */
     }
     .nav-button{
       width:160px;height:80px;
@@ -145,6 +149,23 @@
     .nav-button:nth-child(34){background:rgba(120,200,120,.4);}
     .nav-button:nth-child(35){background:rgba(120,180,255,.4);}
     .nav-button:nth-child(36){background:rgba(180,150,255,.4);}
+
+    /* 2. 新增：底部统计栏样式 (核心修改) */
+    .footer-info {
+      margin-top: 50px; /* 与上方网格的间距 */
+      padding: 10px 25px;
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 14px;
+      font-weight: 500;
+      /* 沿用毛玻璃风格，但更低调 */
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      gap: 20px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* 增加文字在复杂背景下的可读性 */
+    }
 
     /* ========= 响应式 ========= */
     @media(max-width:768px){
@@ -204,6 +225,16 @@
     <a href="https://gemini.google.com/" class="nav-button" target="_blank" rel="noopener noreferrer">Gemini</a>
     <a href="https://www.x.com" class="nav-button" target="_blank" rel="noopener noreferrer">资讯X</a>
     <a href="https://www.bilibili.com" class="nav-button" target="_blank" rel="noopener noreferrer">哔哩哔哩</a>
+  </div>
+
+  <div class="footer-info">
+    <span id="busuanzi_container_site_pv">
+      本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    </span>
+    <span style="margin: 0 10px;">|</span>
+    <span id="busuanzi_container_site_uv">
+      访客数 <span id="busuanzi_value_site_uv"></span> 人
+    </span>
   </div>
 
 </body>
