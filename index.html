@@ -18,28 +18,25 @@
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       display:flex;flex-direction:column;align-items:center;
       
-      /* 顶部内边距：保持100px，让按钮靠下 */
       padding-top: 100px; 
-      /* 底部增加一些留白，防止统计栏贴底 */
       padding-bottom: 40px; 
-
-      /* 头部与下方网格的距离：保持75px */
       gap: 75px; 
       
       margin:0;min-height:100vh;
     }
 
-    /* ========= 头部双按钮容器 ========= */
+    /* ========= 头部三按钮容器 ========= */
     .header-row {
       display: flex;
       justify-content: center;
       align-items: center;
       
-      /* --- 关键修改：两个按钮之间的距离加大到 100px --- */
-      gap: 400px; 
+      /* --- 关键修改：为了放下三个按钮，间距改为 60px --- */
+      gap: 60px; 
       
       width: 100%;
-      max-width: 1000px; /* 稍微放宽最大宽度，防止挤压 */
+      /* 稍微放宽最大宽度，容纳三个按钮 */
+      max-width: 1200px; 
     }
 
     /* ========= 头部通用胶囊样式 ========= */
@@ -72,7 +69,18 @@
       box-shadow: 0 0 25px rgba(33, 150, 243, 0.6);
     }
 
-    /* --- 样式2：老九的博客 (暖橙) --- */
+    /* --- 样式2：老九学英语 (清新绿 - 新增) --- */
+    .style-english {
+      background: linear-gradient(90deg, rgba(76, 175, 80, 0.5) 0%, rgba(139, 195, 74, 0.5) 100%);
+      box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
+      animation: pulse-green 3s infinite ease-in-out; 
+    }
+    .style-english:hover {
+      background: linear-gradient(90deg, rgba(76, 175, 80, 0.7) 0%, rgba(139, 195, 74, 0.7) 100%);
+      box-shadow: 0 0 25px rgba(76, 175, 80, 0.6);
+    }
+
+    /* --- 样式3：老九的博客 (暖橙) --- */
     .style-blog {
       background: linear-gradient(90deg, rgba(255,118,118,0.5) 0%, rgba(255,177,109,0.5) 100%);
       box-shadow: 0 0 15px rgba(255, 150, 150, 0.4);
@@ -88,6 +96,11 @@
       50% { box-shadow: 0 0 20px rgba(33, 150, 243, 0.6); border-color: rgba(255,255,255,0.9); }
       100% { box-shadow: 0 0 10px rgba(33, 150, 243, 0.3); }
     }
+    @keyframes pulse-green {
+      0% { box-shadow: 0 0 10px rgba(76, 175, 80, 0.3); }
+      50% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.6); border-color: rgba(255,255,255,0.9); }
+      100% { box-shadow: 0 0 10px rgba(76, 175, 80, 0.3); }
+    }
     @keyframes pulse-red {
       0% { box-shadow: 0 0 10px rgba(255, 150, 150, 0.3); }
       50% { box-shadow: 0 0 20px rgba(255, 150, 150, 0.6); border-color: rgba(255,255,255,0.9); }
@@ -99,7 +112,7 @@
       display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
       gap: 50px; 
       max-width:95vw;
-      padding: 0 40px 0 40px; /* 底部padding去掉，由body控制 */
+      padding: 0 40px 0 40px; 
     }
     .nav-button{
       width:160px;height:80px;
@@ -112,7 +125,7 @@
     }
     .nav-button:hover{transform:scale(1.05);box-shadow:8px 8px 16px rgba(0,0,0,.15),-8px -8px 16px rgba(255,255,255,.9);opacity:.9;}
 
-    /* —— 颜色映射 (36) —— */
+    /* —— 颜色映射 (保持原样) —— */
     .nav-button:nth-child(1){background:rgba(255,150,150,.4);}
     .nav-button:nth-child(2){background:rgba(255,200,120,.4);}
     .nav-button:nth-child(3){background:rgba(120,200,120,.4);}
@@ -150,21 +163,20 @@
     .nav-button:nth-child(35){background:rgba(120,180,255,.4);}
     .nav-button:nth-child(36){background:rgba(180,150,255,.4);}
 
-    /* 2. 新增：底部统计栏样式 (核心修改) */
+    /* 底部统计栏样式 */
     .footer-info {
-      margin-top: 50px; /* 与上方网格的间距 */
+      margin-top: 50px; 
       padding: 10px 25px;
       color: rgba(255, 255, 255, 0.9);
       font-size: 14px;
       font-weight: 500;
-      /* 沿用毛玻璃风格，但更低调 */
       background: rgba(255, 255, 255, 0.15);
       backdrop-filter: blur(5px);
       border-radius: 20px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       display: flex;
       gap: 20px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.3); /* 增加文字在复杂背景下的可读性 */
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
 
     /* ========= 响应式 ========= */
@@ -188,6 +200,10 @@
     <div class="capsule-btn style-nav">
       老九的导航站
     </div>
+
+    <a href="#" class="capsule-btn style-english" target="_blank" rel="noopener noreferrer">
+      老九学英语
+    </a>
 
     <a href="http://www.hujiuxi.top" class="capsule-btn style-blog" target="_blank" rel="noopener noreferrer">
       老九的博客
