@@ -18,11 +18,12 @@
       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
       display:flex;flex-direction:column;align-items:center;
       
-      padding-top: 100px; 
+      padding-top: 80px; 
       padding-bottom: 40px; 
-      gap: 75px; 
+      gap: 50px; 
       
       margin:0;min-height:100vh;
+      overflow-x: hidden;
     }
 
     /* ========= 头部三按钮容器 ========= */
@@ -30,13 +31,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      
-      /* --- 关键修改：为了放下三个按钮，间距改为 60px --- */
       gap: 60px; 
-      
       width: 100%;
-      /* 稍微放宽最大宽度，容纳三个按钮 */
-      max-width: 1200px; 
+      max-width: 1200px;
     }
 
     /* ========= 头部通用胶囊样式 ========= */
@@ -69,7 +66,7 @@
       box-shadow: 0 0 25px rgba(33, 150, 243, 0.6);
     }
 
-    /* --- 样式2：老九学英语 (清新绿 - 新增) --- */
+    /* --- 样式2：老九学英语 (清新绿) --- */
     .style-english {
       background: linear-gradient(90deg, rgba(76, 175, 80, 0.5) 0%, rgba(139, 195, 74, 0.5) 100%);
       box-shadow: 0 0 15px rgba(76, 175, 80, 0.4);
@@ -107,13 +104,24 @@
       100% { box-shadow: 0 0 10px rgba(255, 150, 150, 0.3); }
     }
 
-    /* ========= 导航按钮网格 ========= */
-    .navigation-container{
-      display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
-      gap: 50px; 
-      max-width:95vw;
-      padding: 0 40px 0 40px; 
+    /* ========= [核心修改] 导航容器改用 Flex 列布局 ========= */
+    .main-container {
+        display: flex;
+        flex-direction: column;
+        gap: 50px; /* 行与行之间的间距 */
+        max-width: 95vw;
+        padding: 0 40px;
+        align-items: center;
     }
+
+    /* ========= 通用网格行样式 ========= */
+    .grid-row {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 50px; /* 按钮之间的间距 */
+    }
+    
+    /* 导航按钮样式 (保持不变) */
     .nav-button{
       width:160px;height:80px;
       display:flex;justify-content:center;align-items:center;
@@ -125,47 +133,117 @@
     }
     .nav-button:hover{transform:scale(1.05);box-shadow:8px 8px 16px rgba(0,0,0,.15),-8px -8px 16px rgba(255,255,255,.9);opacity:.9;}
 
-    /* —— 颜色映射 (保持原样) —— */
-    .nav-button:nth-child(1){background:rgba(255,150,150,.4);}
-    .nav-button:nth-child(2){background:rgba(255,200,120,.4);}
-    .nav-button:nth-child(3){background:rgba(120,200,120,.4);}
-    .nav-button:nth-child(4){background:rgba(120,180,255,.4);}
-    .nav-button:nth-child(5){background:rgba(180,150,255,.4);}
-    .nav-button:nth-child(6){background:rgba(255,120,180,.4);}
-    .nav-button:nth-child(7){background:rgba(255,200,120,.4);}
-    .nav-button:nth-child(8){background:rgba(120,200,120,.4);}
-    .nav-button:nth-child(9){background:rgba(120,180,255,.4);}
-    .nav-button:nth-child(10){background:rgba(180,150,255,.4);}
-    .nav-button:nth-child(11){background:rgba(255,120,180,.4);}
-    .nav-button:nth-child(12){background:rgba(255,150,150,.4);}
-    .nav-button:nth-child(13){background:rgba(120,200,120,.4);}
-    .nav-button:nth-child(14){background:rgba(120,180,255,.4);}
-    .nav-button:nth-child(15){background:rgba(180,150,255,.4);}
-    .nav-button:nth-child(16){background:rgba(255,120,180,.4);}
-    .nav-button:nth-child(17){background:rgba(255,150,150,.4);}
-    .nav-button:nth-child(18){background:rgba(255,200,120,.4);}
-    .nav-button:nth-child(19){background:rgba(120,180,255,.4);}
-    .nav-button:nth-child(20){background:rgba(180,150,255,.4);}
-    .nav-button:nth-child(21){background:rgba(255,120,180,.4);}
-    .nav-button:nth-child(22){background:rgba(255,150,150,.4);}
-    .nav-button:nth-child(23){background:rgba(255,200,120,.4);}
-    .nav-button:nth-child(24){background:rgba(120,200,120,.4);}
-    .nav-button:nth-child(25){background:rgba(180,150,255,.4);}
-    .nav-button:nth-child(26){background:rgba(255,120,180,.4);}
-    .nav-button:nth-child(27){background:rgba(255,150,150,.4);}
-    .nav-button:nth-child(28){background:rgba(255,200,120,.4);}
-    .nav-button:nth-child(29){background:rgba(120,200,120,.4);}
-    .nav-button:nth-child(30){background:rgba(120,180,255,.4);}
-    .nav-button:nth-child(31){background:rgba(255,120,180,.4);}
-    .nav-button:nth-child(32){background:rgba(255,150,150,.4);}
-    .nav-button:nth-child(33){background:rgba(255,200,120,.4);}
-    .nav-button:nth-child(34){background:rgba(120,200,120,.4);}
-    .nav-button:nth-child(35){background:rgba(120,180,255,.4);}
-    .nav-button:nth-child(36){background:rgba(180,150,255,.4);}
+    /* —— 颜色映射 (保持不变) —— */
+    .row1 .nav-button:nth-child(1){background:rgba(255,150,150,.4);}
+    .row1 .nav-button:nth-child(2){background:rgba(255,200,120,.4);}
+    .row1 .nav-button:nth-child(3){background:rgba(120,200,120,.4);}
+    .row1 .nav-button:nth-child(4){background:rgba(120,180,255,.4);}
+    .row1 .nav-button:nth-child(5){background:rgba(180,150,255,.4);}
+    .row1 .nav-button:nth-child(6){background:rgba(255,120,180,.4);}
+    
+    .row2 .nav-button:nth-child(1){background:rgba(255,200,120,.4);}
+    .row2 .nav-button:nth-child(2){background:rgba(120,200,120,.4);}
+    .row2 .nav-button:nth-child(3){background:rgba(120,180,255,.4);}
+    .row2 .nav-button:nth-child(4){background:rgba(180,150,255,.4);}
+    .row2 .nav-button:nth-child(5){background:rgba(255,120,180,.4);}
+    .row2 .nav-button:nth-child(6){background:rgba(255,150,150,.4);}
+    
+    .row3 .nav-button:nth-child(1){background:rgba(120,200,120,.4);}
+    .row3 .nav-button:nth-child(2){background:rgba(120,180,255,.4);}
+    /* 中间两个位置留给博客卡片 */
+    .row3 .nav-button:nth-child(3){background:rgba(180,150,255,.4);}
+    .row3 .nav-button:nth-child(4){background:rgba(255,120,180,.4);}
+    
+    .row4 .nav-button:nth-child(1){background:rgba(255,150,150,.4);}
+    .row4 .nav-button:nth-child(2){background:rgba(255,200,120,.4);}
+    .row4 .nav-button:nth-child(3){background:rgba(120,180,255,.4);}
+    .row4 .nav-button:nth-child(4){background:rgba(180,150,255,.4);}
+    .row4 .nav-button:nth-child(5){background:rgba(255,120,180,.4);}
+    .row4 .nav-button:nth-child(6){background:rgba(255,150,150,.4);}
 
-    /* 底部统计栏样式 */
+    .row5 .nav-button:nth-child(1){background:rgba(255,200,120,.4);}
+    .row5 .nav-button:nth-child(2){background:rgba(120,200,120,.4);}
+    .row5 .nav-button:nth-child(3){background:rgba(180,150,255,.4);}
+    .row5 .nav-button:nth-child(4){background:rgba(255,120,180,.4);}
+    .row5 .nav-button:nth-child(5){background:rgba(255,150,150,.4);}
+    .row5 .nav-button:nth-child(6){background:rgba(255,200,120,.4);}
+
+    .row6 .nav-button:nth-child(1){background:rgba(120,200,120,.4);}
+    .row6 .nav-button:nth-child(2){background:rgba(120,180,255,.4);}
+    .row6 .nav-button:nth-child(3){background:rgba(255,120,180,.4);}
+    .row6 .nav-button:nth-child(4){background:rgba(255,150,150,.4);}
+    .row6 .nav-button:nth-child(5){background:rgba(255,200,120,.4);}
+    .row6 .nav-button:nth-child(6){background:rgba(120,200,120,.4);}
+
+
+    /* ========= [新增] 博客文章卡片样式 ========= */
+    /* 这个容器占据两个按钮的宽度+间距 */
+    .blog-card-container {
+        grid-column: span 2; /* 跨越两列 */
+        height: 80px; /* 高度与按钮一致 */
+        display: flex;
+        gap: 15px; /* 两篇文章之间的间距 */
+    }
+
+    .blog-mini-card {
+        flex: 1; /* 平均分配宽度 */
+        height: 100%;
+        background: rgba(255, 255, 255, 0.35); /* 稍微透明一点的白色背景 */
+        backdrop-filter: blur(12px);
+        border-radius: 20px; /* 与按钮一致的圆角 */
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 4px 4px 10px rgba(0,0,0,0.1), -4px -4px 10px rgba(255,255,255,0.6);
+        padding: 10px 15px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .blog-mini-card:hover {
+        transform: scale(1.03);
+        background: rgba(255, 255, 255, 0.6);
+        box-shadow: 6px 6px 14px rgba(0,0,0,0.15), -6px -6px 14px rgba(255,255,255,0.8);
+    }
+
+    .blog-title {
+        font-size: 14px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis; /* 标题过长省略 */
+    }
+    
+    .blog-excerpt {
+        font-size: 11px;
+        color: #555;
+        line-height: 1.3;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* 限制显示2行简介 */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Loading 状态样式 */
+    .loading-placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 13px;
+        color: #666;
+        font-weight: 500;
+    }
+
+
+    /* 底部统计栏 */
     .footer-info {
-      margin-top: 50px; 
+      margin-top: 20px; 
       padding: 10px 25px;
       color: rgba(255, 255, 255, 0.9);
       font-size: 14px;
@@ -179,68 +257,95 @@
       text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
     }
 
-    /* ========= 响应式 ========= */
+    /* ========= 响应式适配 ========= */
+    @media(max-width: 1200px){
+        .grid-row { grid-template-columns: repeat(4, 1fr); }
+        /* 在4列布局下，让博客卡片占据中间两列 */
+        .row3 .nav-button:nth-child(2) { order: -1; } 
+        .blog-card-container { grid-column: 2 / span 2; } 
+    }
+
     @media(max-width:768px){
-      .navigation-container{grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(12,1fr);gap:40px;}
-      .nav-button{width:140px;}
-      
+      .grid-row{grid-template-columns:repeat(3,1fr); gap: 30px;}
+      .nav-button{width: auto; height: 70px; font-size: 16px;}
+      .main-container { gap: 30px; }
       .header-row { flex-direction: column; gap: 15px; }
       .capsule-btn { width: 80%; }
+      /* 小屏幕下，博客卡片占满一行 */
+      .blog-card-container { grid-column: span 3; height: auto; flex-direction: column; gap: 10px; }
+      .blog-mini-card { height: 70px; }
     }
     
     @media(max-width:480px){
       body { gap: 35px; padding-top: 50px; }
-      .navigation-container{grid-template-columns:1fr;grid-template-rows:repeat(36,1fr);gap:30px;}
+      .grid-row{grid-template-columns:repeat(2,1fr); gap: 20px;}
+      .blog-card-container { grid-column: span 2; }
     }
   </style>
 </head>
 <body>
 
   <div class="header-row">
-    <div class="capsule-btn style-nav">
-      老九的导航站
-    </div>
-
-    <a href="#" class="capsule-btn style-english" target="_blank" rel="noopener noreferrer">
-      老九学英语
-    </a>
-
-    <a href="http://www.hujiuxi.top" class="capsule-btn style-blog" target="_blank" rel="noopener noreferrer">
-      老九的博客
-    </a>
+    <div class="capsule-btn style-nav">老九的导航站</div>
+    <a href="#" class="capsule-btn style-english" target="_blank" rel="noopener noreferrer">老九学英语</a>
+    <a href="http://www.hujiuxi.top" class="capsule-btn style-blog" target="_blank" rel="noopener noreferrer">老九的博客</a>
   </div>
 
-  <div class="navigation-container">
-    <a href="http://10.65.248.23/magno/render" class="nav-button" target="_blank" rel="noopener noreferrer">财政一体化</a>
-    <a href="https://rs.jshrss.jiangsu.gov.cn/index/" class="nav-button" target="_blank" rel="noopener noreferrer">江苏人社</a>
-    <a href="https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index" class="nav-button" target="_blank" rel="noopener noreferrer">医疗保险</a>
-    <a href="https://wt.sqzfgjj.cn/ish/" class="nav-button" target="_blank" rel="noopener noreferrer">公积金</a>
-    <a href=" http://10.65.248.23/fcfa" class="nav-button" target="_blank" rel="noopener noreferrer">资产云</a>
-    <a href="http://tybb.jscz.gov.cn/" class="nav-button" target="_blank" rel="noopener noreferrer">资产月报</a>
-    <a href="https://hlwglt.jsbchina.cn:8080/login.html"class="nav-button" target="_blank" rel="noopener noreferrer">江苏银行</a>
-    <a href="https://buyer.sq12315.com/#/login" class="nav-button" target="_blank" rel="noopener noreferrer">阳光直采</a>
-    <a href="https://ygst.jsed.edu.cn" class="nav-button" target="_blank" rel="noopener noreferrer">阳光监督</a>
-    <a href="http://mail.163.com/" class="nav-button" target="_blank" rel="noopener noreferrer">网易邮箱</a>
-    <a href="https://mail.qq.com/" class="nav-button" target="_blank" rel="noopener noreferrer">QQ邮箱</a>
-    <a href="http://192.168.116.100:8880/" class="nav-button" target="_blank" rel="noopener noreferrer">办公平台</a>
-    <a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-button" target="_blank" rel="noopener noreferrer">统计直报</a>
-    <a href="https://jyjjxx.moe.edu.cn/" class="nav-button" target="_blank" rel="noopener noreferrer">经费年报</a>
-    <a href="http://jszfcg.jscz.gov.cn/jszc/login" class="nav-button" target="_blank" rel="noopener noreferrer">政府采购</a>
-    <a href="https://tjxt.moe.edu.cn:8000" class="nav-button" target="_blank" rel="noopener noreferrer">教育统计</a>
-    <a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login"class="nav-button" target="_blank" rel="noopener noreferrer">法人业务</a>
-    <a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp"class="nav-button" target="_blank" rel="noopener noreferrer">债务监测</a>
-    <a href="./jsq.html" class="nav-button" target="_blank" rel="noopener noreferrer">退休计算</a>
-    <a href="http://www.jste.net.cn/uids/index.jsp" class="nav-button" target="_blank" rel="noopener noreferrer">江苏教师</a>
-    <a href="https://sqgbxy.101.com/portal/home" class="nav-button" target="_blank" rel="noopener noreferrer">宿迁干部</a>
-    <a href="./down.html" class="nav-button" target="_blank" rel="noopener noreferrer">常用软件</a>
-    <a href="./cwjc.html" class="nav-button" target="_blank" rel="noopener noreferrer">常用教程</a>
-    <a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink" class="nav-button" target="_blank" rel="noopener noreferrer">账号密码</a>
-    <a href="https://web.hujiuxi.top:5001" class="nav-button" target="_blank" rel="noopener noreferrer">我的群晖</a>
-    <a href="http://www.github.com" class="nav-button" target="_blank" rel="noopener noreferrer">Github</a>
-    <a href="https://chatgpt.com" class="nav-button" target="_blank" rel="noopener noreferrer">Chatgpt</a>
-    <a href="https://gemini.google.com/" class="nav-button" target="_blank" rel="noopener noreferrer">Gemini</a>
-    <a href="https://www.x.com" class="nav-button" target="_blank" rel="noopener noreferrer">资讯X</a>
-    <a href="https://www.bilibili.com" class="nav-button" target="_blank" rel="noopener noreferrer">哔哩哔哩</a>
+  <div class="main-container">
+      
+      <div class="grid-row row1">
+        <a href="http://10.65.248.23/magno/render" class="nav-button" target="_blank">财政一体化</a>
+        <a href="https://rs.jshrss.jiangsu.gov.cn/index/" class="nav-button" target="_blank">江苏人社</a>
+        <a href="https://ybj.jszwfw.gov.cn/hsa-local/web/hallEnter/#/Index" class="nav-button" target="_blank">医疗保险</a>
+        <a href="https://wt.sqzfgjj.cn/ish/" class="nav-button" target="_blank">公积金</a>
+        <a href=" http://10.65.248.23/fcfa" class="nav-button" target="_blank">资产云</a>
+        <a href="http://tybb.jscz.gov.cn/" class="nav-button" target="_blank">资产月报</a>
+      </div>
+
+      <div class="grid-row row2">
+        <a href="https://hlwglt.jsbchina.cn:8080/login.html"class="nav-button" target="_blank">江苏银行</a>
+        <a href="https://buyer.sq12315.com/#/login" class="nav-button" target="_blank">阳光直采</a>
+        <a href="https://ygst.jsed.edu.cn" class="nav-button" target="_blank">阳光监督</a>
+        <a href="http://mail.163.com/" class="nav-button" target="_blank">网易邮箱</a>
+        <a href="https://mail.qq.com/" class="nav-button" target="_blank">QQ邮箱</a>
+        <a href="http://192.168.116.100:8880/" class="nav-button" target="_blank">办公平台</a>
+      </div>
+
+      <div class="grid-row row3">
+        <a href="https://tjy.stats.gov.cn/platform/page.html#/pc/internetLogin" class="nav-button" target="_blank">统计直报</a>
+        <a href="https://jyjjxx.moe.edu.cn/" class="nav-button" target="_blank">经费年报</a>
+        
+        <div class="blog-card-container" id="blog-container">
+            <div class="blog-mini-card loading-placeholder">
+                <span>🪙 财务笔记加载中...</span>
+            </div>
+            <div class="blog-mini-card loading-placeholder" style="animation-delay: 0.2s;">
+                <span>Please wait...</span>
+            </div>
+        </div>
+
+        <a href="https://djgl.jssbb.gov.cn:8096/sydjweb/login"class="nav-button" target="_blank">法人业务</a>
+        <a href="https://lfpt.mof.gov.cn/page/frame/bootstrap/userLoginCzbDw.jsp"class="nav-button" target="_blank">债务监测</a>
+      </div>
+
+      <div class="grid-row row4">
+        <a href="./jsq.html" class="nav-button" target="_blank">退休计算</a>
+        <a href="http://www.jste.net.cn/uids/index.jsp" class="nav-button" target="_blank">江苏教师</a>
+        <a href="https://sqgbxy.101.com/portal/home" class="nav-button" target="_blank">宿迁干部</a>
+        <a href="./down.html" class="nav-button" target="_blank">常用软件</a>
+        <a href="./cwjc.html" class="nav-button" target="_blank">常用教程</a>
+        <a href="https://ncnmmxias1nc.feishu.cn/wiki/FhTJw3YbtipbA5kokjRceyPZnEd?from=from_copylink" class="nav-button" target="_blank">账号密码</a>
+      </div>
+      
+      <div class="grid-row row5">
+        <a href="https://web.hujiuxi.top:5001" class="nav-button" target="_blank">我的群晖</a>
+        <a href="http://www.github.com" class="nav-button" target="_blank">Github</a>
+        <a href="https://chatgpt.com" class="nav-button" target="_blank">Chatgpt</a>
+        <a href="https://gemini.google.com/" class="nav-button" target="_blank">Gemini</a>
+        <a href="https://www.x.com" class="nav-button" target="_blank">资讯X</a>
+        <a href="https://www.bilibili.com" class="nav-button" target="_blank">哔哩哔哩</a>
+      </div>
+
   </div>
 
   <div class="footer-info">
@@ -252,6 +357,78 @@
       访客数 <span id="busuanzi_value_site_uv"></span> 人
     </span>
   </div>
+
+<script>
+    const BLOG_API = 'https://www.hujiuxi.top/content.json'; 
+    const TARGET_CATEGORY = '财务相关'; 
+
+    async function fetchBlogPosts() {
+        const container = document.getElementById('blog-container');
+        
+        try {
+            const response = await fetch(BLOG_API);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.json();
+            const allPosts = data.posts || data; 
+
+            // 1. 筛选 "财务相关" 文章
+            let financePosts = allPosts.filter(post => {
+                if (!post.categories) return false;
+                return JSON.stringify(post.categories).indexOf(TARGET_CATEGORY) !== -1;
+            });
+
+            if (financePosts.length === 0) {
+                container.innerHTML = `
+                    <div class="blog-mini-card loading-placeholder">暂无财务文章</div>
+                    <div class="blog-mini-card loading-placeholder">No posts found</div>`;
+                return;
+            }
+
+            // 2. 随机打乱并取前 2 篇
+            financePosts.sort(() => 0.5 - Math.random());
+            const displayPosts = financePosts.slice(0, 2);
+
+            // 3. 清空 Loading 并渲染新卡片
+            container.innerHTML = '';
+            
+            displayPosts.forEach(post => {
+                const card = document.createElement('a');
+                card.className = 'blog-mini-card';
+                card.href = 'https://www.hujiuxi.top' + post.path; 
+                card.target = '_blank';
+                
+                // 清洗和截取内容
+                let titleText = post.title || '无标题';
+                let contentText = post.text || post.content || '';
+                // 简介截取前 25 个字，避免溢出
+                let cleanExcerpt = contentText.replace(/<[^>]+>/g, '').substring(0, 25) + '...';
+
+                card.innerHTML = `
+                    <div class="blog-title">📄 ${titleText}</div>
+                    <div class="blog-excerpt">${cleanExcerpt}</div>
+                `;
+                container.appendChild(card);
+            });
+
+            // 如果文章少于2篇，补一个占位符保持布局整齐（可选）
+            if (displayPosts.length === 1) {
+                 container.innerHTML += `
+                    <div class="blog-mini-card loading-placeholder" style="opacity:0.6">
+                        <span>更多文章撰写中...</span>
+                    </div>`;
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            container.innerHTML = `
+                <div class="blog-mini-card loading-placeholder" style="color:#ff6b6b">加载失败</div>
+                <div class="blog-mini-card loading-placeholder">Check console</div>`;
+        }
+    }
+
+    // 页面加载完成后执行
+    fetchBlogPosts();
+</script>
 
 </body>
 </html>
