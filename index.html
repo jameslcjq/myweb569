@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>老九的导航站</title>
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
   
   <style>
     /* ========= 页面整体 ========= */
@@ -265,12 +264,12 @@
   </div>
 
   <div class="footer-info">
-    <span id="busuanzi_container_site_pv">
-      本站总访问量 <span id="busuanzi_value_site_pv"></span> 次
+    <span>
+      本站总访问量 <span id="site_pv">Loading...</span> 次
     </span>
     <span style="margin: 0 10px;">|</span>
-    <span id="busuanzi_container_site_uv">
-      访客数 <span id="busuanzi_value_site_uv"></span> 人
+    <span>
+      访客数 <span id="site_uv">Loading...</span> 人
     </span>
   </div>
 
@@ -324,6 +323,41 @@
     }
 
     renderBlogPosts();
+
+    // ============================================================
+    // 📊 站点统计逻辑 (Worker: ID=2)
+    // ============================================================
+    (function() {
+      const SITE_ID = 2; // 当前站点的 ID
+      // 您的 Cloudflare Worker 地址
+      const API_URL = "https://my-counter.jameslcjq.workers.dev"; 
+
+      // 使用 localStorage 判断是否为新访客（避免 ID 冲突，加上站点前缀）
+      const visitorKey = `visited_site_${SITE_ID}`;
+      const isNewVisitor = !localStorage.getItem(visitorKey);
+      
+      // 构造请求类型
+      const type = isNewVisitor ? "uv" : "pv";
+      
+      // 发送请求
+      fetch(`${API_URL}?type=${type}&id=${SITE_ID}`)
+        .then(response => response.json())
+        .then(data => {
+          // 更新页面数字
+          document.getElementById("site_pv").innerText = data.pv;
+          document.getElementById("site_uv").innerText = data.uv;
+          
+          // 标记为已访问
+          if (isNewVisitor) {
+            localStorage.setItem(visitorKey, "true");
+          }
+        })
+        .catch(err => {
+          console.error("统计获取失败:", err);
+          document.getElementById("site_pv").innerText = "-";
+          document.getElementById("site_uv").innerText = "-";
+        });
+    })();
 </script>
 
 </body>
