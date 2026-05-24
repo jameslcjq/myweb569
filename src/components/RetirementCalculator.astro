@@ -1,0 +1,123 @@
+<div class="calculator-grid">
+	<section class="calculator-card">
+		<h2>视同缴费时间计算器</h2>
+		<label for="work-start-date">参加工作日期</label>
+		<input type="month" id="work-start-date" max="2014-10" />
+
+		<label for="interrupted-months">间断工龄（月）</label>
+		<input type="number" id="interrupted-months" min="0" value="0" />
+
+		<button type="button" id="duration-button">计算年数和月数</button>
+		<div class="calculator-result" id="result-duration"></div>
+	</section>
+
+	<section class="calculator-card">
+		<h2>生活补贴计算器</h2>
+		<p>改革时（2014年9月30日）退休补贴用工龄加学龄算。</p>
+
+		<label for="years">工龄（年）</label>
+		<input type="number" id="years" min="0" placeholder="请输入工龄" />
+
+		<label for="rank">职称等级</label>
+		<select id="rank">
+			<option value="专技四级">专技四级</option>
+			<option value="专技五级">专技五级</option>
+			<option value="专技六级">专技六级</option>
+			<option value="专技七级">专技七级</option>
+			<option value="专技八级">专技八级</option>
+			<option value="专技九级">专技九级</option>
+			<option value="专技十级">专技十级</option>
+			<option value="专技十一级">专技十一级</option>
+			<option value="专技十二级">专技十二级</option>
+			<option value="专技十三级">专技十三级</option>
+			<option value="技术工一级">技术工一级</option>
+			<option value="技术工二级">技术工二级</option>
+			<option value="技术工三级">技术工三级</option>
+			<option value="技术工四级">技术工四级</option>
+			<option value="技术工五级">技术工五级</option>
+			<option value="普通工">普通工</option>
+		</select>
+
+		<button type="button" id="subsidy-button">计算补贴</button>
+		<div class="calculator-result" id="result-subsidy"></div>
+	</section>
+</div>
+
+<script>
+	const subsidyData = {
+		专技四级: [0, 0, 2893, 2999, 3124],
+		专技五级: [0, 2554, 2652, 2759, 2875],
+		专技六级: [0, 2554, 2652, 2759, 2875],
+		专技七级: [0, 2554, 2652, 2759, 2875],
+		专技八级: [2198, 2278, 2367, 2465, 2572],
+		专技九级: [2198, 2278, 2367, 2465, 2572],
+		专技十级: [2198, 2278, 2367, 2465, 2572],
+		专技十一级: [2011, 2074, 2154, 2234, 2332],
+		专技十二级: [2011, 2074, 2154, 2234, 2332],
+		专技十三级: [1896, 1940, 1994, 2056, 2127],
+		技术工一级: [0, 2367, 2456, 2563, 2670],
+		技术工二级: [0, 2261, 2341, 2439, 2545],
+		技术工三级: [2083, 2154, 2234, 2323, 2421],
+		技术工四级: [1985, 2047, 2118, 2198, 2287],
+		技术工五级: [1887, 1931, 1985, 2047, 2118],
+		普通工: [1833, 1878, 1931, 1994, 2065],
+	};
+
+	document.getElementById("duration-button")?.addEventListener("click", () => {
+		const startInput = document.getElementById("work-start-date");
+		const interruptedInput = document.getElementById("interrupted-months");
+		const result = document.getElementById("result-duration");
+		if (!(startInput instanceof HTMLInputElement) || !(interruptedInput instanceof HTMLInputElement) || !result) return;
+
+		const startDateValue = startInput.value;
+		const interruptedMonths = Number.parseInt(interruptedInput.value, 10);
+		if (!startDateValue) {
+			result.innerText = "请输入有效的参加工作日期";
+			return;
+		}
+		if (Number.isNaN(interruptedMonths) || interruptedMonths < 0) {
+			result.innerText = "请输入有效的间断工龄月份";
+			return;
+		}
+
+		const endDate = new Date("2014-10-01");
+		const startDate = new Date(startDateValue);
+		if (startDate > endDate) {
+			result.innerText = "请确保参加工作日期早于 2014 年 10 月";
+			return;
+		}
+
+		let years = endDate.getFullYear() - startDate.getFullYear();
+		let months = endDate.getMonth() - startDate.getMonth();
+		if (months < 0) {
+			years -= 1;
+			months += 12;
+		}
+
+		let totalMonths = years * 12 + months - interruptedMonths;
+		if (totalMonths < 0) {
+			result.innerText = "间断工龄超过了实际工龄，请检查输入。";
+			return;
+		}
+
+		result.innerText = `从参加工作日期到 2014 年 10 月的时间差：${Math.floor(totalMonths / 12)} 年 ${totalMonths % 12} 个月（已扣除间断工龄 ${interruptedMonths} 个月）`;
+	});
+
+	document.getElementById("subsidy-button")?.addEventListener("click", () => {
+		const yearsInput = document.getElementById("years");
+		const rankInput = document.getElementById("rank");
+		const result = document.getElementById("result-subsidy");
+		if (!(yearsInput instanceof HTMLInputElement) || !(rankInput instanceof HTMLSelectElement) || !result) return;
+
+		const years = Number.parseInt(yearsInput.value, 10);
+		const rank = rankInput.value;
+		if (Number.isNaN(years) || years < 0) {
+			result.innerText = "请输入有效的工龄。";
+			return;
+		}
+
+		const row = subsidyData[rank];
+		const index = years < 10 ? 0 : years < 20 ? 1 : years < 30 ? 2 : years < 40 ? 3 : 4;
+		result.innerText = `您的生活补贴为：${row[index]} 元/月`;
+	});
+</script>
