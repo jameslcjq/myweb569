@@ -1,5 +1,5 @@
 .hero h1 {
-	font-size: clamp(1.9rem, calc(1.35rem + 2.4vw), 3.5rem);
+	font-size: clamp(1.55rem, calc(1.18rem + 1.65vw), 2.65rem);
 }
 
 .hero .tagline {
@@ -30,8 +30,18 @@
 }
 
 .software-showcase {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+	gap: 1rem;
 	margin-top: 0.6rem;
 	margin-bottom: 1.3rem;
+}
+
+.home-section-title {
+	margin-top: 1.6rem;
+	margin-bottom: 0.75rem;
+	font-size: clamp(1.15rem, calc(1rem + 0.75vw), 1.55rem);
+	line-height: 1.25;
 }
 
 .software-card {
@@ -56,7 +66,7 @@
 
 .software-card h2 {
 	margin-top: 0.25rem;
-	font-size: var(--sl-text-h3);
+	font-size: var(--sl-text-h4);
 	line-height: var(--sl-line-height-headings);
 }
 
@@ -85,6 +95,148 @@
 	font-size: var(--sl-text-sm);
 	font-weight: 700;
 	text-decoration: none;
+}
+
+.contact-card {
+	display: grid;
+	grid-template-columns: minmax(9rem, 0.85fr) repeat(3, minmax(0, 1fr));
+	gap: 0.75rem;
+	margin-top: 0.75rem;
+}
+
+.contact-card div {
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.5rem;
+	padding: 0.8rem 0.9rem;
+	background: var(--sl-color-black);
+}
+
+.contact-card span {
+	display: block;
+	color: var(--sl-color-gray-3);
+	font-size: var(--sl-text-xs);
+}
+
+.contact-card strong {
+	display: block;
+	margin-top: 0.25rem;
+	color: var(--sl-color-white);
+	font-size: var(--sl-text-sm);
+	overflow-wrap: anywhere;
+}
+
+.floating-contact {
+	position: fixed;
+	right: 1rem;
+	bottom: 1rem;
+	z-index: 30;
+	width: min(21.5rem, calc(100vw - 2rem));
+}
+
+.floating-contact details {
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.65rem;
+	background: color-mix(in srgb, var(--sl-color-black) 92%, transparent);
+	box-shadow: var(--sl-shadow-lg);
+	overflow: hidden;
+	backdrop-filter: blur(10px);
+}
+
+.floating-contact summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.65rem 0.85rem;
+	color: var(--sl-color-white);
+	font-size: var(--sl-text-sm);
+	font-weight: 700;
+	cursor: pointer;
+	list-style: none;
+}
+
+.floating-contact summary::-webkit-details-marker {
+	display: none;
+}
+
+.floating-contact summary::after {
+	content: "−";
+	color: var(--sl-color-gray-3);
+	font-weight: 700;
+}
+
+.floating-contact details:not([open]) summary::after {
+	content: "+";
+}
+
+.floating-contact-body {
+	display: grid;
+	grid-template-columns: 5.2rem minmax(0, 1fr);
+	gap: 0.75rem;
+	padding: 0 0.85rem 0.85rem;
+}
+
+.floating-contact-qr strong {
+	display: block;
+	margin-top: 0.35rem;
+	color: var(--sl-color-white);
+	font-size: var(--sl-text-xs);
+	text-align: center;
+}
+
+.floating-contact .wechat-qr {
+	width: 5.2rem;
+}
+
+.floating-contact-list {
+	display: grid;
+	gap: 0.45rem;
+	align-content: start;
+}
+
+.floating-contact-list a,
+.floating-contact-list div {
+	display: block;
+	border-radius: 0.4rem;
+	padding: 0.35rem 0.45rem;
+	background: color-mix(in srgb, var(--sl-color-gray-6) 60%, transparent);
+	text-decoration: none;
+}
+
+.floating-contact-list span {
+	display: block;
+	color: var(--sl-color-gray-3);
+	font-size: 0.68rem;
+	line-height: 1.25;
+}
+
+.floating-contact-list strong {
+	display: block;
+	color: var(--sl-color-white);
+	font-size: clamp(0.72rem, 2.1vw, 0.78rem);
+	line-height: 1.35;
+	white-space: nowrap;
+}
+
+.qr-contact {
+	align-content: start;
+}
+
+.wechat-qr {
+	position: relative;
+	width: min(8.5rem, 100%);
+	aspect-ratio: 1;
+	overflow: hidden;
+	border: 1px solid var(--sl-color-gray-5);
+	border-radius: 0.45rem;
+	background: #fff;
+}
+
+.wechat-qr img {
+	position: absolute;
+	width: 135%;
+	max-width: none;
+	left: -17.5%;
+	top: -26%;
 }
 
 .home-nav .card-grid {
@@ -223,5 +375,15 @@
 @media (max-width: 50rem) {
 	.calculator-grid {
 		grid-template-columns: 1fr;
+	}
+
+	.contact-card {
+		grid-template-columns: 1fr;
+	}
+
+	.floating-contact {
+		right: 0.75rem;
+		bottom: 0.75rem;
+		width: min(21rem, calc(100vw - 1.5rem));
 	}
 }

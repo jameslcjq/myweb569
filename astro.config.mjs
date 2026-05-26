@@ -6,7 +6,7 @@ import starlight from '@astrojs/starlight';
 export default defineConfig({
 	integrations: [
 		starlight({
-			title: '老九的个人博客',
+			title: '老九的博客-',
 			description: '财务流程、常用工具、软件入口和个人记录。',
 			defaultLocale: 'root',
 			locales: {
