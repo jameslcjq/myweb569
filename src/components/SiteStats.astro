@@ -1,0 +1,65 @@
+---
+const siteId = 2;
+const apiUrl = 'https://count.hujiuxi.top';
+---
+
+<section class="site-stats" aria-label="访问统计" data-site-stats data-site-id={siteId} data-api-url={apiUrl}>
+	<span>本站总访问量 <strong data-site-pv>Loading...</strong> 次</span>
+	<span class="site-stats-divider" aria-hidden="true">|</span>
+	<span>访客数 <strong data-site-uv>Loading...</strong> 人</span>
+</section>
+
+<script>
+	function setText(element, value) {
+		if (!element) return;
+		element.textContent = value;
+	}
+
+	function formatCount(value) {
+		const number = Number(value);
+		return Number.isFinite(number) ? number.toLocaleString('zh-CN') : '-';
+	}
+
+	for (const stats of document.querySelectorAll('[data-site-stats]')) {
+		const siteId = stats.getAttribute('data-site-id') || '2';
+		const apiUrl = stats.getAttribute('data-api-url') || 'https://count.hujiuxi.top';
+		const pvElement = stats.querySelector('[data-site-pv]');
+		const uvElement = stats.querySelector('[data-site-uv]');
+		const visitorKey = `visited_site_${siteId}`;
+
+		let isNewVisitor = false;
+		try {
+			isNewVisitor = !localStorage.getItem(visitorKey);
+		} catch {
+			isNewVisitor = false;
+		}
+
+		const params = new URLSearchParams({
+			id: siteId,
+			type: isNewVisitor ? 'uv' : 'pv',
+			path: window.location.pathname,
+		});
+
+		fetch(`${apiUrl}?${params.toString()}`, { cache: 'no-store' })
+			.then((response) => {
+				if (!response.ok) throw new Error('Stats request failed');
+				return response.json();
+			})
+			.then((data) => {
+				setText(pvElement, formatCount(data.pv ?? data.site_pv));
+				setText(uvElement, formatCount(data.uv ?? data.site_uv));
+
+				if (isNewVisitor) {
+					try {
+						localStorage.setItem(visitorKey, 'true');
+					} catch {
+						// Ignore storage failures. Counting still works as a page view.
+					}
+				}
+			})
+			.catch(() => {
+				setText(pvElement, '-');
+				setText(uvElement, '-');
+			});
+	}
+</script>
