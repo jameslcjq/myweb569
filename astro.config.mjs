@@ -19,6 +19,10 @@ export default defineConfig({
 			sidebar: [
 				{ label: '首页', slug: '' },
 				{
+					label: '软件',
+					items: [{ autogenerate: { directory: '软件' } }],
+				},
+				{
 					label: '工资',
 					items: [{ autogenerate: { directory: '工资' } }],
 				},

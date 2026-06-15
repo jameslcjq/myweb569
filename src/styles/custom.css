@@ -104,6 +104,12 @@
 	text-decoration: none;
 }
 
+.software-logo {
+	width: 4.5rem;
+	border-radius: 0.9rem;
+	box-shadow: var(--sl-shadow-md);
+}
+
 .site-stats {
 	display: flex;
 	flex-wrap: wrap;
