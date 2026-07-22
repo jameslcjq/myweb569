@@ -4,10 +4,11 @@ import starlight from '@astrojs/starlight';
 
 // https://astro.build/config
 export default defineConfig({
+	site: 'https://www.yunbg.top',
 	integrations: [
 		starlight({
-			title: '老九的博客-',
-			description: '财务流程、常用工具、软件入口和个人记录。',
+			title: '老九的学校财务工作博客',
+			description: '面向江苏学校财务人员，整理工资发放、财政一体化、医保社保、公积金和学校财务软件的实际工作流程。',
 			defaultLocale: 'root',
 			locales: {
 				root: {
