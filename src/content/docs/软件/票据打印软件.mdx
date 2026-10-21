@@ -38,12 +38,26 @@ import FloatingContact from '../../../components/FloatingContact.astro';
 ## 下载与了解
 
 <CardGrid>
-	<LinkCard title="下载最新版" description="票据打印软件 1.5.1 安装包，约 6.9 MB。" href="https://jyj.yunbg.vip/downloads/files/laojiu-print-1.5.1-setup.exe" target="_blank" rel="noopener noreferrer" />
-	<LinkCard title="校验值" description="查看 SHA256 校验值，用于确认文件完整性。" href="https://jyj.yunbg.vip/downloads/files/laojiu-print-1.5.1-setup.exe.sha256" target="_blank" rel="noopener noreferrer" />
+	<LinkCard title="下载最新版" description="票据打印软件 1.5.10 安装包，约 13.4 MB。2026-10-22 发布。" href="/downloads/files/laojiu-print-1.5.10-setup.exe" />
+	<LinkCard title="校验值" description="查看 SHA256 校验值，用于确认文件完整性。" href="/downloads/files/laojiu-print-1.5.10-setup.exe.sha256" target="_blank" rel="noopener noreferrer" />
 </CardGrid>
+
+### 安装说明
+
+适用于 Windows x64。安装包不集成 .NET，主程序需要系统已安装 **.NET 10 Desktop Runtime（x64 桌面运行时）**；DTZ 模板解析辅助程序使用 .NET Framework 4.8。已具备对应运行环境的电脑无需重复安装。
+
+安装包中的 Excel 数据和 DTZ 模板统一放在安装目录的 `data` 文件夹。升级安装保留已有数据文件，不覆盖同名文件。
+
+### 1.5.10 更新内容
+
+- 编辑模板字段时，在“字段属性 → 样式”中选择电脑上已安装的中文字体。
+- 支持粗体、斜体、下划线，可组合设置。
+- DTZ、JSON 模板保存后重新打开保留字体和字形，预览及打印使用相同设置。
+- 单行、多行和分散排列文字均支持上述字形设置。
+
+修改完成后，点击字段属性中的“确定”，再保存模板。换到其他电脑使用时，也需要安装所选字体。
 
 ## 一句话介绍
 
 **票据打印软件，把常用票据和固定格式材料集中起来，让重复打印更快、更稳。**
 
-后续可以继续补充软件截图、具体操作步骤、适用系统、版本更新记录和常见问题。
