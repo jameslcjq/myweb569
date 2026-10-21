@@ -61,11 +61,24 @@ import FloatingContact from '../../../components/FloatingContact.astro';
 - 食堂支出明细表、收支情况表、伙食费报表整理
 - 财务数据导出、打印和上报
 
+## 1.2.34 更新：历史账查询
+
+发布于 **2026年10月22日**，本次提供 **Windows 实例1安装包**。
+
+- 导入旧财务软件的科目期初和凭证后，可按科目、期间查询历史总账和明细账，并导出 Excel。
+- 保留原账行顺序；科目名称有差异时提示核对，确认后保留原文。已针对两种旧软件导出格式完成回测，其他格式导入前请先核对预览。
+- 历史账独立保存，不写入正式账，也不参与现账余额、月结、财务报表或教育局上报。历史账期间须早于现账启用月份。
+- 历史数据随软件备份一起保存和恢复。两组历史账副本的备份、恢复及总账、明细账一致性验证已通过。
+
+**升级前请先备份现有账套。** 恢复备份时，正式账和历史账会一起回到备份时点，备份之后新增的数据不会保留。导入历史账并核对完成后，建议再做一次备份。
+
 ## 下载与了解
 
+当前版本：**1.2.34 · 实例1**。安装包大小：**116,979,216 字节（约111.6 MiB）**。安装包尚未数字签名。
+
 <CardGrid>
-	<LinkCard title="下载最新版" description="食常财务 1.2.10 安装包，约 124 MB。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.10-setup.exe" target="_blank" rel="noopener noreferrer" />
-	<LinkCard title="校验值" description="查看 SHA256 校验值，用于确认文件完整性。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.10-setup.exe.sha256" target="_blank" rel="noopener noreferrer" />
+	<LinkCard title="下载最新版" description="食常财务 1.2.34 实例1安装包，约111.6 MiB。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.34-setup.exe" target="_blank" rel="noopener noreferrer" />
+	<LinkCard title="校验值" description="查看 SHA256 校验值，用于确认文件完整性。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.34-setup.exe.sha256" target="_blank" rel="noopener noreferrer" />
 </CardGrid>
 
 ## 一句话介绍
@@ -73,3 +86,4 @@ import FloatingContact from '../../../components/FloatingContact.astro';
 **食常财务，让食堂流水自动变凭证，让往来账自动对清，让月末报表自动整理好。**
 
 对于学校食堂来说，它不是简单的表格工具，而是一套围绕食堂业务流程设计的财务工作台。日常少录入，月末少核对，报表少返工，让财务人员把更多时间放在审核和管理上。
+
