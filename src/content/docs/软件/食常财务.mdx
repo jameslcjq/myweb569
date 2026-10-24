@@ -61,6 +61,18 @@ import FloatingContact from '../../../components/FloatingContact.astro';
 - 食堂支出明细表、收支情况表、伙食费报表整理
 - 财务数据导出、打印和上报
 
+## 1.2.35 更新：收入分类、财务提醒与采集补漏
+
+发布于 **2026年10月24日**，本次提供 **Windows 实例1安装包**。
+
+- 陪餐收入按其他伙食收入记账，尝餐在同张凭证中单列；抽检购样款仍按其他收入处理。费用名称含教师、教职工、教工等时，识别为教工预收费。
+- 学期末未用预收款正余额合计超过1,000元时提醒，可在“设置 → 财务提醒”修改标准；退款增加性质提示，不自动退款或改科目。
+- 首次盈余承接可直接输入学生、教工、其他累计盈余金额，合计须与原余额一致。已结账的历史归属不会自动改变。
+- 修复新增费用的报表归并问题；上报时无法对应平台九类的费用明确提示，避免漏报。
+- 非食材采集失败后，普通重采可补齐缺页，已有记录继续去重保留。重采需要重新核对分页，可能比原来更慢。
+
+**升级前请先备份账套。** 本次更新不会自动改写已结账月份和已有手工凭证；历史分类如需调整，请先核对业务依据。
+
 ## 1.2.34 更新：历史账查询
 
 发布于 **2026年10月22日**，本次提供 **Windows 实例1安装包**。
@@ -74,11 +86,11 @@ import FloatingContact from '../../../components/FloatingContact.astro';
 
 ## 下载与了解
 
-当前版本：**1.2.34 · 实例1**。安装包大小：**116,979,216 字节（约111.6 MiB）**。安装包尚未数字签名。
+当前版本：**1.2.35 · 实例1**。安装包大小：**117,300,430 字节（约111.9 MiB）**。安装包尚未数字签名。
 
 <CardGrid>
-	<LinkCard title="下载最新版" description="食常财务 1.2.34 实例1安装包，约111.6 MiB。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.34-setup.exe" target="_blank" rel="noopener noreferrer" />
-	<LinkCard title="校验值" description="查看 SHA256 校验值，用于确认文件完整性。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.34-setup.exe.sha256" target="_blank" rel="noopener noreferrer" />
+	<LinkCard title="下载最新版" description="食常财务 1.2.35 实例1安装包，约111.9 MiB。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.35-setup.exe" target="_blank" rel="noopener noreferrer" />
+	<LinkCard title="校验值" description="查看 SHA256 校验值，用于确认文件完整性。" href="https://jyj.yunbg.vip/downloads/files/stcw-1.2.35-setup.exe.sha256" target="_blank" rel="noopener noreferrer" />
 </CardGrid>
 
 ## 一句话介绍
